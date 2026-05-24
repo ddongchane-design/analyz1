@@ -1,0 +1,15 @@
+아래는 동일 주제({topic_label})에 대한 여러 영상 분석 결과입니다.
+이를 종합하여 교차 인사이트를 도출해주세요.
+반드시 JSON으로만 답하세요.
+
+분석 결과 목록:
+{analyses}
+
+응답 형식:
+{
+  "cross_insight": "여러 영상에서 공통으로 나타나는 핵심 트렌드나 시그널",
+  "consensus": "bullish | bearish | neutral 중 하나",
+  "divergence": "영상 간 시각 차이나 논쟁 포인트",
+  "key_themes": ["공통 테마 1", "테마 2", "테마 3"],
+  "watch_list": ["주목 종목/섹터 1", "종목 2"]
+}

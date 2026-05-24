@@ -1,0 +1,18 @@
+{
+  "channels": [
+    {
+      "id": "UCWV2Uy79TOpB1bk8hnq1nGw",
+      "name": "월텍남",
+      "handle": "@waltechman",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCWV2Uy79TOpB1bk8hnq1nGw",
+      "active": true
+    },
+    {
+      "id": "UCIipmgxpUxDmPP-ma3Ahvbw",
+      "name": "매경월가월부",
+      "handle": "@MK_Invest",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCIipmgxpUxDmPP-ma3Ahvbw",
+      "active": true
+    }
+  ]
+}

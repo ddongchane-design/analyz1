@@ -1,0 +1,4 @@
+feedparser
+yt-dlp
+google-genai
+python-dotenv

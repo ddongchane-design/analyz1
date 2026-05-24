@@ -1,0 +1,9 @@
+.env
+*.cookies.txt
+www.youtube.com_cookies.txt
+__pycache__/
+*.pyc
+*.pyo
+.python-version
+venv/
+.venv/

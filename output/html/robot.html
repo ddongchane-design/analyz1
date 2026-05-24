@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <title>YouTube Insight | 로봇/피지컬AI</title>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            bg:      "#0b1326",
+            surface: "#101931",
+            card:    "#16213e",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+  </style>
+
+</head>
+<body class="bg-bg text-white min-h-screen relative">
+
+  <!-- Glowing Blobs -->
+  <div class="fixed top-[-10%] left-[-5%] w-[35%] h-[35%] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] right-[-5%] w-[25%] h-[35%] bg-purple-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-bg/80 backdrop-blur-xl border-b border-slate-800/60">
+    <div class="max-w-[1400px] mx-auto px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-1 text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-800/50">
+          <span class="material-symbols-outlined text-base">arrow_back</span> 전체
+        </a>
+        <div>
+          <h1 class="font-manrope text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-white">
+            🤖 로봇/피지컬AI
+          </h1>
+          <p class="text-xs text-slate-500">AI 분석 인사이트</p>
+        </div>
+      </div>
+      <span class="text-xs text-slate-600">2026.05.25 08:05</span>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="max-w-[1400px] mx-auto px-8 pb-3 flex items-center gap-2 flex-wrap">
+      <span class="text-xs text-slate-500 mr-1">채널</span>
+      <button onclick="filterCh(this,'all')" data-ch="all"
+        class="ch-btn text-xs px-3 py-1 rounded-full border border-cyan-400/50 bg-cyan-500/15 text-cyan-300 font-semibold transition-all">
+        전체
+      </button>
+      <button onclick="filterCh(this,'월텍남')" data-ch="월텍남" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-cyan-400/50 hover:text-cyan-300 transition-all">월텍남</button>
+<button onclick="filterCh(this,'매경월가월부')" data-ch="매경월가월부" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-cyan-400/50 hover:text-cyan-300 transition-all">매경월가월부</button>
+
+      <div class="ml-auto flex gap-2">
+        <button onclick="filterSig(this,'bullish')" data-sig="bullish"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 transition-all">
+          ▲ 강세
+        </button>
+        <button onclick="filterSig(this,'bearish')" data-sig="bearish"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-rose-500/30 text-rose-400 hover:bg-rose-500/15 transition-all">
+          ▼ 약세
+        </button>
+        <button onclick="filterSig(this,'neutral')" data-sig="neutral"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-amber-500/30 text-amber-400 hover:bg-amber-500/15 transition-all">
+          ● 중립
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-[1400px] mx-auto px-8 py-10">
+    <div id="cardGrid" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+      
+    </div>
+    <div id="emptyMsg" class="hidden text-center py-24 text-slate-600">
+      <span class="material-symbols-outlined text-5xl mb-3 block opacity-30">inbox</span>
+      해당 조건의 영상이 없습니다.
+    </div>
+  </main>
+
+  <script>
+    let activeCh = 'all', activeSig = null;
+    function filterCh(btn, ch) {
+      document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('!bg-cyan-500/15','!border-cyan-400/50','!text-cyan-300','font-semibold'));
+      btn.classList.add('font-semibold');
+      activeCh = ch; applyFilter();
+    }
+    function filterSig(btn, sig) {
+      if (activeSig === sig) {
+        btn.classList.remove('!bg-emerald-500/15','!bg-rose-500/15','!bg-amber-500/15');
+        activeSig = null;
+      } else {
+        document.querySelectorAll('.sig-btn').forEach(b => b.classList.remove('!bg-emerald-500/15','!bg-rose-500/15','!bg-amber-500/15'));
+        const map = {bullish:'!bg-emerald-500/15', bearish:'!bg-rose-500/15', neutral:'!bg-amber-500/15'};
+        btn.classList.add(map[sig]);
+        activeSig = sig;
+      }
+      applyFilter();
+    }
+    function applyFilter() {
+      let visible = 0;
+      document.querySelectorAll('.insight-card').forEach(c => {
+        const ok = (activeCh==='all'||c.dataset.ch===activeCh) && (!activeSig||c.dataset.sig===activeSig);
+        c.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      });
+      document.getElementById('emptyMsg').classList.toggle('hidden', visible > 0);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <title>YouTube Insight | 테크/AI</title>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            bg:      "#0b1326",
+            surface: "#101931",
+            card:    "#16213e",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+  </style>
+
+</head>
+<body class="bg-bg text-white min-h-screen relative">
+
+  <!-- Glowing Blobs -->
+  <div class="fixed top-[-10%] left-[-5%] w-[35%] h-[35%] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] right-[-5%] w-[25%] h-[35%] bg-purple-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-bg/80 backdrop-blur-xl border-b border-slate-800/60">
+    <div class="max-w-[1400px] mx-auto px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-1 text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-800/50">
+          <span class="material-symbols-outlined text-base">arrow_back</span> 전체
+        </a>
+        <div>
+          <h1 class="font-manrope text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-white">
+            💻 테크/AI
+          </h1>
+          <p class="text-xs text-slate-500">AI 분석 인사이트</p>
+        </div>
+      </div>
+      <span class="text-xs text-slate-600">2026.05.25 08:05</span>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="max-w-[1400px] mx-auto px-8 pb-3 flex items-center gap-2 flex-wrap">
+      <span class="text-xs text-slate-500 mr-1">채널</span>
+      <button onclick="filterCh(this,'all')" data-ch="all"
+        class="ch-btn text-xs px-3 py-1 rounded-full border border-indigo-400/50 bg-indigo-500/15 text-indigo-300 font-semibold transition-all">
+        전체
+      </button>
+      <button onclick="filterCh(this,'월텍남')" data-ch="월텍남" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-indigo-400/50 hover:text-indigo-300 transition-all">월텍남</button>
+<button onclick="filterCh(this,'매경월가월부')" data-ch="매경월가월부" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-indigo-400/50 hover:text-indigo-300 transition-all">매경월가월부</button>
+
+      <div class="ml-auto flex gap-2">
+        <button onclick="filterSig(this,'bullish')" data-sig="bullish"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 transition-all">
+          ▲ 강세
+        </button>
+        <button onclick="filterSig(this,'bearish')" data-sig="bearish"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-rose-500/30 text-rose-400 hover:bg-rose-500/15 transition-all">
+          ▼ 약세
+        </button>
+        <button onclick="filterSig(this,'neutral')" data-sig="neutral"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-amber-500/30 text-amber-400 hover:bg-amber-500/15 transition-all">
+          ● 중립
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-[1400px] mx-auto px-8 py-10">
+    <div id="cardGrid" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+      
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/_vvJKmH3JFU/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">GPU 다음은 CPU입니다 | 샌디스크 30배 놓친 분들 꼭 보세요</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-05-13</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">AI 발전 단계에 따라 요구되는 컴퓨팅 자원의 핵심이 변화하고 있으며, 초기 '학습' 단계에서 GPU의 폭발적인 수요가 있었다면, 이제 '추론 및 관리'를 담당하는 CPU의 중요성이 부각되는 패러다임 전환기이다. 특히 '에이전틱 AI'의 등장은 CPU의 역할과 수요를 기하급수적으로 증가시키고 있으며, 이는 기존의 AI 투자 포트폴리오를 재검토할 필요성을 시사한다. 공급망 병목 현상과 더불어 CPU 시장의 판도 변화가 가속화될 전망이다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AI 시장의 중심이 학습(GPU)에서 추론 및 관리(CPU)로 이동하고 있으며, 이는 CPU 수요 증가로 이어지고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>에이전틱 AI 시대 도래로 CPU:GPU 비율이 과거 1:8에서 1:4로, 향후 1:1까지 변화하며 CPU가 AI 워크로드의 핵심 관리자로 부상하고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>웨이퍼 생산 및 패키징 병목 현상이 심화되며 AI GPU와 모바일 AP에 밀린 서버 CPU 공급이 제한되어 가격이 폭증하고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AMD는 CPU와 GPU를 동시에 보유한 강점을 바탕으로 서버 CPU 시장 점유율을 확대하고 차세대 AI 솔루션을 통해 강력한 수혜가 예상된다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>인텔은 과거 부진을 딛고 정부 지원 및 빅테크 협력, 데이터센터 부문 실적 개선에 힘입어 CPU 시장에서의 재도약 기회를 맞고 있다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">GPU 중심의 AI 투자에서 벗어나 AI 워크로드의 변화에 따른 CPU 및 서버 관리 솔루션 관련 기업(AMD, Intel 등)에 대한 투자 기회를 탐색해야 한다. 특히, 공급망 제약으로 인한 CPU 가격 상승과 장기적인 AI 투자 지속성을 고려할 때, 관련 기업들의 실적과 신제품 출시 동향을 면밀히 주시하고, 인텔과 같이 저평가되었던 기업들의 재평가 가능성에 주목해야 한다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">CPU</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">반도체</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">데이터센터</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AMD</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">인텔</span></div>
+    <a href="https://www.youtube.com/watch?v=_vvJKmH3JFU" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/vDtL7vg5gGI/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">월 수백만원 AI시대 곧 온다..이제 AI도 양극화 ㄷㄷ..(feat. 클로드 종량제)</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-05-08</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">무료 또는 저가 AI 서비스 시대가 끝나고, AI가 전력이나 수도와 같은 '유틸리티'로 재정의됨에 따라, 모든 AI 활용 행위에는 물리적 비용이 수반됩니다. 이는 토큰을 새로운 화폐로 만들고, AI 접근성 및 활용 능력에 따라 사회적, 경제적 양극화를 가속화하며, 궁극적으로 인공지능이 권력과 자본의 새로운 지표가 될 것임을 의미합니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AI는 더욱 불평등해지고 격차를 크게 만들 것이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>Anthropic의 Claude와 같은 주요 AI 서비스는 높은 운영 비용과 IPO 준비로 인해 사용량 기반의 종량제 요금 모델로 전환될 것이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AI 에이전트의 토큰 소모량은 기존 챗봇 대비 수백에서 수만 배에 달하며, 이는 서비스 비용 상승의 주된 원인이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>빅테크 기업들은 AI 투자로 인한 막대한 비용을 줄이기 위해 대규모 인력 감축 및 AI 네이티브 조직으로의 전환을 시도하고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AI는 더 이상 무료 서비스가 아니며, '지능의 민주화'는 현실적으로 불가능하고, 지능이 비용이 되는 유틸리티 시대가 도래한다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>미래에는 광고가 AI 응답과 구분 불가능하게 정교해질 수 있으며, AI 접근성의 차이가 사회적 계급을 고착화시킬 수 있다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">AI를 활용하는 비용 증가와 종량제 모델 도입에 대비하고, AI 기술을 선도하며 비용 효율성을 확보하고 있는 빅테크 및 AI 기업들에 대한 투자 기회를 모색해야 합니다. 동시에, AI 활용 능력(AI 리터러시)을 개인 및 조직의 핵심 자본으로 인식하고, 이를 적극적으로 개발하여 다가오는 AI 시대의 변화에 능동적으로 대응해야 합니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">종량제</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">비용</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">양극화</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">투자</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">유틸리티</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI 리터러시</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">IPO</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">토큰</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">수익성</span></div>
+    <a href="https://www.youtube.com/watch?v=vDtL7vg5gGI" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/OoDugotYyR8/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">구글 아마존 신고가, 빅테크 얼마나 더 갈까?</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-05-04</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">빅테크 기업들의 막대한 AI 투자는 단순한 기술 경쟁을 넘어, 인력 대체 및 생산성 향상이라는 경제적 가치 창출에 기반하고 있습니다. 이는 현재 시장이 AI 버블로 인식하는 경향을 반박하며, 장기적인 관점에서 기업 가치를 더욱 끌어올릴 핵심 동력이 될 것입니다. 특히 풀스택 AI 전략(칩, 모델, 서비스 연동)을 가진 기업들이 시장을 주도할 가능성이 높습니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>구글과 아마존의 EPS는 비상장 주식(스페이스X, 엔트로픽)의 미실현 평가 이익 반영으로 크게 상승했습니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>구글 클라우드와 아마존 웹 서비스(AWS)는 AI 수요 폭증에 힘입어 높은 성장률을 기록하며 시장 점유율 확대를 꾀하고 있습니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AI에 대한 대규모 투자는 소프트웨어 개발자 연봉 2조 달러 시장 등 잠재적 인력 대체 가치에 비하면 거품이 아니며, 10배 이상의 생산성 가치를 창출할 것입니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>구글은 AI 요약 검색 도입에도 광고 매출이 15% 성장했으며, AI를 통해 돈을 잘 벌고 있다는 지표가 다수 확인됩니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AWS는 오픈AI, 엔트로픽, 메타, 엔비디아 모델을 모두 서비스하며 AI 모델 허브로서의 입지를 강화하고 있습니다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자는 AI 수요 폭증으로 인해 클라우드 컴퓨팅 자원이 부족한 상황과 AI 투자에 대한 시장의 관대한 태도를 주목해야 합니다. 단순 AI 수혜주를 넘어, 자체 칩 개발 능력, 강력한 AI 모델, 기존 서비스와의 유기적 연동을 통해 AI 가치를 극대화하는 풀스택 AI 기업(알파벳, 아마존)에 대한 장기적 관점의 투자를 고려해야 합니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">클라우드</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">기업실적</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">투자전략</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">빅테크</span></div>
+    <a href="https://www.youtube.com/watch?v=OoDugotYyR8" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/PFzko5KYNQM/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">테슬라, 생각보다 더 빠를지도 모르겠습니다...ㄷㄷ</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-04-20</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">테슬라의 가치 평가 핵심은 단순한 전기차 제조사를 넘어 FSD 기술을 통한 고마진 소프트웨어 및 AI 서비스(로보택시, SDV 생태계) 기업으로의 변모 가능성에 있습니다. 현재의 주가는 미래 수익 잠재력을 반영하고 있으며, 규제 완화와 시장 선점 능력, 그리고 강력한 데이터 기반의 기술 우위가 투자 논리의 핵심을 이룹니다. 경쟁사 추격 속에서도 테슬라가 구축할 '소프트웨어 정의 차량' 생태계가 장기적인 성장의 원동력이 될 것입니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>테슬라 FSD는 웨이모 등 경쟁사 대비 기술적으로 훨씬 앞서 있으며, 완전 자율주행의 핵심 동력이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>FSD의 전 세계적 규제 승인(특히 유럽, 중국)이 이루어지면 테슬라는 차량 판매를 넘어선 소프트웨어/AI 기업으로 전환하며 영업이익이 3배 이상 폭증할 것이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>테슬라는 70억 마일 이상의 방대한 운행 데이터와 컴퓨팅 파워를 통해 자율주행 기술에서 압도적인 해자를 확보하고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>미래 모빌리티는 '소프트웨어 정의 차량(SDV)'과 사용자 경험 중심의 생태계로 전환될 것이며, 테슬라는 이를 선점하여 애플과 같은 강력한 플랫폼이 될 것이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>로보택시는 2026년 말까지 확산될 가능성이 높으며, 테슬라는 우버 대비 현저히 낮은 운행 비용($0.3/마일)으로 시장을 장악하며 엄청난 수익을 창출할 것이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>중국 전기차 기업(샤오미, 샤오펑, 니오, 화웨이)과 엔비디아의 추격이 테슬라에게 가장 큰 경쟁 리스크이다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자는 단기 주가 변동보다 테슬라 FSD의 주요 국가별 규제 승인 진행 상황, FSD 구독자 수 및 침투율 변화를 집중적으로 모니터링해야 합니다. 또한, 중국 전기차 기업 및 엔비디아의 자율주행 기술 발전 속도와 테슬라 생태계 구축 및 확장에 대한 뉴스를 지속적으로 추적하여 경쟁 우위 변화를 평가하는 것이 중요합니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">테슬라</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">FSD</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">자율주행</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">로보택시</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">소프트웨어 정의 차량 (SDV)</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">투자</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">규제</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">엔비디아</span></div>
+    <a href="https://www.youtube.com/watch?v=PFzko5KYNQM" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/rtqLvPH81GE/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">테슬라보다 스페이스X가 비싼 세가지 이유</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-04-15</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">SpaceX는 단순히 로켓을 쏘아 올리는 회사를 넘어, 로켓 재사용 기술을 통한 비용 혁신을 기반으로 6G 위성 통신 시장을 장악하고 미래 피지컬 AI 시대의 핵심 인프라를 구축하려는 일론 머스크식 '대량 생산-비용 절감-생태계 창출' 전략의 우주 버전이다. 이는 과거 전기차 시장을 개척했듯이, 불가능해 보였던 우주 산업의 경제성을 현실화하며 인류의 우주 활용 방식을 근본적으로 바꿀 잠재력을 가진다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>SpaceX는 기업 가치 2조 달러 이상으로 평가받으며 시가총액 상위권 기업에 버금가는 위상을 가진다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>SpaceX의 현재 주요 수익원은 6G 시대 통신 표준이 될 저궤도 위성 통신(스타링크)이며, 시장의 80% 이상을 지배한다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>핵심 기술인 로켓 재사용은 발사 비용을 10분의 1로 혁신적으로 낮춰 우주 산업의 경제성을 확보한다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>발사 비용 절감을 통해 위성 대량 배치 및 궁극적으로 우주 데이터 센터 구축을 목표로 하며, 이는 무한한 에너지와 공간 활용의 이점을 제공한다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>미래의 피지컬 AI(로봇, 자율주행, UAM) 시대에는 5G로는 커버할 수 없는 영역이 많아 6G 저궤도 위성 통신이 필수적이다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">SpaceX는 비상장이나, 장기적인 우주 경제 성장 가능성을 고려하여 관련 기술(위성 통신, 로켓 발사체 부품 및 서비스)에 투자할 기회를 모색해야 한다. 또한 6G 및 피지컬 AI 시대 도래에 따른 산업 변화와 파급 효과를 주시하며, 일론 머스크의 다른 상장 기업(테슬라 등)의 비전과 연계하여 투자 가치를 재평가하는 것이 중요하다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">SpaceX</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">우주 경제</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">6G 위성 통신</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">로켓 재사용</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">피지컬 AI</span></div>
+    <a href="https://www.youtube.com/watch?v=rtqLvPH81GE" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bearish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/yWZNCJqk2e0/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">너무 위험한 AI, 클로드 미토스 소식에.. 전세계가 난리</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-04-13</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(255,79,114,0.12);color:#ff4f72;border-color:rgba(255,79,114,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#ff4f72"></span>
+        BEARISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">클로드 미소스 사태는 AI의 강력한 잠재력과 함께 그것이 야기할 수 있는 전례 없는 리스크를 명확히 보여주며, AI가 단순히 기술 혁신을 넘어 사회, 경제 시스템의 근간을 뒤흔들 수 있는 '양날의 검'임을 입증했다. 특히, AI의 접근성과 통제 주체에 대한 국제적 합의가 부재한 상황에서 소수 기업에 의한 기술 독점은 잠재적 무기화 가능성을 높이며 인류 전체의 위협으로 이어질 수 있다는 경고를 던진다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>클로드 미소스는 기존 AI 모델을 압도하는 수준으로 수천 개의 제로데이 취약점을 단기간에 식별하며 사이버 공격에 압도적인 우위를 제공할 수 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>이로 인해 팔란티어 같은 주요 소프트웨어 기업들의 주가가 급락하고 연준 및 재무부 장관이 빅테크 CEO들을 소집하는 등 전방위적인 우려와 대응이 촉발되고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>AI 기술의 급격한 발전에 비해 통제 및 확산 방지에 대한 제도적 장치가 부재하며, 소수 기업에 의한 AI 접근권 제한은 AI 무기화 및 불균등 활용 가능성을 높인다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자들은 AI 기술 발전에 따른 사이버 보안 시장의 급격한 변화를 주시하고, 전통적인 SaaS 기업들의 보안 리스크 증가 가능성을 포트폴리오에 반영해야 한다. 또한, AI 기술의 윤리적 통제 및 규제 동향에 대한 지속적인 모니터링을 통해 장기적인 투자 전략을 재고하고, AI 보안 및 방어 솔루션 관련 기업들의 성장 잠재력을 분석할 필요가 있다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">사이버 보안</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">주가 폭락</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI 규제</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">SaaS</span></div>
+    <a href="https://www.youtube.com/watch?v=yWZNCJqk2e0" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="월텍남" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/viWgF7A4Do0/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">팔란티어 핵심기술 3개 딱 20분으로 정리했습니다</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">월텍남</span>
+        <span class="text-[11px] text-slate-500">2026-04-06</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">팔란티어의 핵심 경쟁력은 단순한 데이터 분석을 넘어, 이질적인 데이터를 연결하고 맥락화하여 '온톨로지' 기반의 지능형 의사 결정 시스템을 구축하는 능력에 있습니다. 이는 기업과 정부가 데이터 홍수 속에서 실시간으로 복잡한 문제를 해결하고 전략적 우위를 점할 수 있게 하여, 타사 대비 깊은 기술적, 시장적 해자를 형성하고 있음을 시사합니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>팔란티어의 플랫폼은 크게 정부향 솔루션 '고담'과 민간 기업 솔루션 '파운드리'로 나뉘며, 'AIP'는 이 둘 위에 쌓인 AI 레이어이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>현대전은 무기전이 아닌 데이터전, 즉 AI 싸움으로 진화하고 있으며, 팔란티어의 AI 기술은 적 식별 및 타격, 드론 조정 등에 핵심적으로 활용된다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>팔란티어의 '온톨로지' 기술은 분산된 데이터를 수집, 분류하고 객체 간의 관계를 연결하여 누구나 쉽게 의사 결정에 필요한 중요한 정보를 도출하게 돕는다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>팔란티어는 통신 기록, 금융 거래, GPS 정보 등 방대한 데이터를 연결하여 범죄 조직의 보스를 찾아내는 등 범죄 탐지 분야에서 독보적인 해자를 구축하고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>팔란티어의 파운드리 플랫폼은 기업의 ERP 데이터 마이그레이션 등 운영 효율화에 기여하며, 시간/비용 절감 및 정확도 향상 효과를 가져온다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자는 팔란티어를 단순히 '전쟁 관련주'로 인식하기보다, 고담과 파운드리 플랫폼을 아우르는 AI 기반의 데이터 OS 기업으로서 그 확장성과 '온톨로지' 기술의 독점적 가치에 주목해야 합니다. 특히, 비전문가도 데이터 기반 의사 결정을 할 수 있게 하는 '민주화된 데이터 인텔리전스'의 가능성을 면밀히 분석하고 장기적 관점에서 접근할 필요가 있습니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">데이터</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">팔란티어</span></div>
+    <a href="https://www.youtube.com/watch?v=viWgF7A4Do0" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-[0_8px_32px_rgba(129,140,248,0.15)] relative overflow-hidden"
+     data-ch="매경월가월부" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/1yJLyvXWKi0/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-indigo-200 transition-colors">팀 쿡 시대 끝…애플이 다시 ‘제품’을 꺼내든 이유 | 실리콘밸리뷰 | 원호섭 특파원</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30">매경월가월부</span>
+        <span class="text-[11px] text-slate-500">2026-05-23</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-indigo-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">이번 애플의 CEO 교체는 단순한 리더십 변화를 넘어, '아이폰 이후의 시대'에 대한 애플의 심도 깊은 고민과 전략적 방향 전환을 상징합니다. 이는 기술 패러다임이 AI 중심으로 이동하면서, 애플이 과거의 '제품' 혁신 DNA를 다시 꺼내어 하드웨어와 AI의 유기적인 결합을 통해 사용자 경험을 재정의하려는 시도로 읽힙니다. 즉, AI 모델 경쟁의 선두를 다투기보다, AI를 가장 자연스럽고 혁신적으로 일상에 통합시키는 '디바이스 플랫폼' 경쟁에서 승리하겠다는 애플의 뼈대 깊은 전략 변화를 보여줍니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>팀 쿡 시대에서 존 터너스 시대로의 CEO 교체는 단순한 세대교체가 아닌, 애플의 AI 기반 하드웨어 및 제품 중심 회사로의 전략적 전환을 의미한다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>애플은 AI 모델 경쟁에서 뒤처졌다는 평가를 극복하기 위해 '최고의 AI 모델'보다 '최고의 AI 경험'을 구현하는 데 집중하고 있다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>존 터너스는 뼈속까지 엔지니어이며, 아이폰, 맥 등 주요 하드웨어 개발을 총괄한 경험을 바탕으로 새로운 하드웨어(카메라 달린 에어팟, 스마트 글라스, AI 펜던트 등)를 통해 AI를 일상에 녹여낼 것이다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>애플의 AI 전략은 앱스토어 구조 개편, 시리를 대화형 AI 에이전트로 전환, 그리고 사용자가 여러 AI 모델(GPT, 제미나이, 클로드 등)을 선택할 수 있는 개방형 구조를 포함한다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>애플은 AI 자체보다 AI가 작동하는 새로운 생활 환경을 구축하여 '스마트폰을 꺼내 앱을 여는 시대'에서 벗어나기를 목표로 한다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자들은 애플의 신제품 출시 로드맵, 특히 AI 기능이 탑재된 스마트 글라스, AI 펜던트 등 차세대 웨어러블 기기 개발 동향을 면밀히 주시해야 합니다. 또한, 시리의 대화형 AI 전환 및 AI 모델 개방 전략이 실제 사용자 경험과 시장 점유율에 어떤 영향을 미치는지, 그리고 존 터너스 CEO의 리더십 하에 애플이 미중 갈등 및 반독점 규제 등 외부 환경적 리스크를 어떻게 관리하는지 지속적으로 관찰해야 합니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">애플</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">CEO교체</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">하드웨어</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">웨어러블</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI전략</span></div>
+    <a href="https://www.youtube.com/watch?v=1yJLyvXWKi0" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-400/30 hover:border-indigo-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+    </div>
+    <div id="emptyMsg" class="hidden text-center py-24 text-slate-600">
+      <span class="material-symbols-outlined text-5xl mb-3 block opacity-30">inbox</span>
+      해당 조건의 영상이 없습니다.
+    </div>
+  </main>
+
+  <script>
+    let activeCh = 'all', activeSig = null;
+    function filterCh(btn, ch) {
+      document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('!bg-indigo-500/15','!border-indigo-400/50','!text-indigo-300','font-semibold'));
+      btn.classList.add('font-semibold');
+      activeCh = ch; applyFilter();
+    }
+    function filterSig(btn, sig) {
+      if (activeSig === sig) {
+        btn.classList.remove('!bg-emerald-500/15','!bg-rose-500/15','!bg-amber-500/15');
+        activeSig = null;
+      } else {
+        document.querySelectorAll('.sig-btn').forEach(b => b.classList.remove('!bg-emerald-500/15','!bg-rose-500/15','!bg-amber-500/15'));
+        const map = {bullish:'!bg-emerald-500/15', bearish:'!bg-rose-500/15', neutral:'!bg-amber-500/15'};
+        btn.classList.add(map[sig]);
+        activeSig = sig;
+      }
+      applyFilter();
+    }
+    function applyFilter() {
+      let visible = 0;
+      document.querySelectorAll('.insight-card').forEach(c => {
+        const ok = (activeCh==='all'||c.dataset.ch===activeCh) && (!activeSig||c.dataset.sig===activeSig);
+        c.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      });
+      document.getElementById('emptyMsg').classList.toggle('hidden', visible > 0);
+    }
+  </script>
+</body>
+</html>

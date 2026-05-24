@@ -1,0 +1,35 @@
+name: YouTube Insight Pipeline
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # 매시간 실행
+  workflow_dispatch:        # 수동 실행 가능
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 쿠키 파일 생성
+        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > www.youtube.com_cookies.txt
+
+      - name: 파이프라인 실행
+        run: python main.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: 결과 커밋 & 푸시
+        run: |
+          git config user.email "bot@youtube-insight"
+          git config user.name "Insight Bot"
+          git add output/ data/
+          git commit -m "update: $(date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git push

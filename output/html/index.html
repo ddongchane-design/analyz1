@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <title>YouTube Insight | Dashboard</title>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            bg:      "#0b1326",
+            surface: "#101931",
+            card:    "#16213e",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+  </style>
+
+</head>
+<body class="bg-bg text-white min-h-screen relative">
+
+  <!-- Glowing Blobs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-500/20 blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[30%] h-[40%] bg-emerald-400/15 blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="fixed top-[30%] right-[5%] w-[20%] h-[20%] bg-amber-400/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+  <main class="relative z-10 max-w-[1400px] mx-auto px-8 py-16 flex flex-col items-center">
+
+    <!-- Hero -->
+    <div class="text-center mb-16 select-none">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 mb-6 text-xs font-semibold text-slate-300 tracking-wider">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> SYSTEM ONLINE
+      </div>
+      <h1 class="font-manrope text-5xl md:text-6xl font-extrabold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-amber-200 pb-2">
+        YouTube Insight
+      </h1>
+      <p class="text-lg text-slate-400 max-w-xl mx-auto font-light leading-relaxed">
+        AI가 유튜브 채널을 실시간 분석해<br>투자 인사이트를 자동으로 추출합니다.
+      </p>
+    </div>
+
+    <!-- Topic Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 w-full mb-6">
+      
+<a href="robot.html" class="group relative bg-card/60 backdrop-blur-xl border border-slate-600/40 p-7 rounded-[2rem] flex flex-col transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_10px_40px_rgba(34,211,238,0.15)]">
+  <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
+  <div class="w-14 h-14 rounded-2xl flex items-center justify-center border mb-4 bg-cyan-500/20 text-cyan-400 border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.15)] text-3xl transition-transform duration-500 group-hover:scale-110">
+    <span class="material-symbols-outlined">precision_manufacturing</span>
+  </div>
+  <div class="text-xl font-bold text-slate-100 mb-1 group-hover:text-cyan-300 transition-colors">🤖 로봇/피지컬AI</div>
+  <div class="text-slate-400 text-sm font-light flex-grow">0개 영상 분석됨</div>
+  <div class="mt-5 flex items-center text-sm font-semibold opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-cyan-400">
+    인사이트 보기 <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
+  </div>
+</a>
+<a href="economy.html" class="group relative bg-card/60 backdrop-blur-xl border border-slate-600/40 p-7 rounded-[2rem] flex flex-col transition-all duration-500 hover:-translate-y-2 hover:border-amber-400/50 hover:shadow-[0_10px_40px_rgba(251,191,36,0.15)]">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
+  <div class="w-14 h-14 rounded-2xl flex items-center justify-center border mb-4 bg-amber-500/20 text-amber-400 border-amber-400/30 shadow-[0_0_15px_rgba(251,191,36,0.15)] text-3xl transition-transform duration-500 group-hover:scale-110">
+    <span class="material-symbols-outlined">query_stats</span>
+  </div>
+  <div class="text-xl font-bold text-slate-100 mb-1 group-hover:text-amber-300 transition-colors">📊 경제/매크로</div>
+  <div class="text-slate-400 text-sm font-light flex-grow">1개 영상 분석됨</div>
+  <div class="mt-5 flex items-center text-sm font-semibold opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-amber-400">
+    인사이트 보기 <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
+  </div>
+</a>
+<a href="tech.html" class="group relative bg-card/60 backdrop-blur-xl border border-slate-600/40 p-7 rounded-[2rem] flex flex-col transition-all duration-500 hover:-translate-y-2 hover:border-indigo-400/50 hover:shadow-[0_10px_40px_rgba(129,140,248,0.15)]">
+  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
+  <div class="w-14 h-14 rounded-2xl flex items-center justify-center border mb-4 bg-indigo-500/20 text-indigo-400 border-indigo-400/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] text-3xl transition-transform duration-500 group-hover:scale-110">
+    <span class="material-symbols-outlined">memory</span>
+  </div>
+  <div class="text-xl font-bold text-slate-100 mb-1 group-hover:text-indigo-300 transition-colors">💻 테크/AI</div>
+  <div class="text-slate-400 text-sm font-light flex-grow">8개 영상 분석됨</div>
+  <div class="mt-5 flex items-center text-sm font-semibold opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-indigo-400">
+    인사이트 보기 <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
+  </div>
+</a>
+<a href="stock.html" class="group relative bg-card/60 backdrop-blur-xl border border-slate-600/40 p-7 rounded-[2rem] flex flex-col transition-all duration-500 hover:-translate-y-2 hover:border-emerald-400/50 hover:shadow-[0_10px_40px_rgba(52,211,153,0.15)]">
+  <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
+  <div class="w-14 h-14 rounded-2xl flex items-center justify-center border mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.15)] text-3xl transition-transform duration-500 group-hover:scale-110">
+    <span class="material-symbols-outlined">candlestick_chart</span>
+  </div>
+  <div class="text-xl font-bold text-slate-100 mb-1 group-hover:text-emerald-300 transition-colors">📈 주식/투자</div>
+  <div class="text-slate-400 text-sm font-light flex-grow">6개 영상 분석됨</div>
+  <div class="mt-5 flex items-center text-sm font-semibold opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-emerald-400">
+    인사이트 보기 <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
+  </div>
+</a>
+<a href="energy.html" class="group relative bg-card/60 backdrop-blur-xl border border-slate-600/40 p-7 rounded-[2rem] flex flex-col transition-all duration-500 hover:-translate-y-2 hover:border-orange-400/50 hover:shadow-[0_10px_40px_rgba(251,146,60,0.15)]">
+  <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
+  <div class="w-14 h-14 rounded-2xl flex items-center justify-center border mb-4 bg-orange-500/20 text-orange-400 border-orange-400/30 shadow-[0_0_15px_rgba(251,146,60,0.15)] text-3xl transition-transform duration-500 group-hover:scale-110">
+    <span class="material-symbols-outlined">bolt</span>
+  </div>
+  <div class="text-xl font-bold text-slate-100 mb-1 group-hover:text-orange-300 transition-colors">⚡ 에너지</div>
+  <div class="text-slate-400 text-sm font-light flex-grow">0개 영상 분석됨</div>
+  <div class="mt-5 flex items-center text-sm font-semibold opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-orange-400">
+    인사이트 보기 <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
+  </div>
+</a>
+    </div>
+
+    <p class="text-xs text-slate-600 mt-2">마지막 업데이트: 2026.05.25 08:05</p>
+  </main>
+</body>
+</html>
