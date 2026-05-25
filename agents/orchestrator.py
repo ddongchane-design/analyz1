@@ -2,6 +2,8 @@ import json
 import os
 import time
 import random
+from datetime import datetime, timezone, timedelta
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 from agents.collector import fetch_new_videos, fetch_transcript, load_seen, save_seen
@@ -102,13 +104,24 @@ def run():
 
             for data in entries:
                 all_cards.append(render_card(data["video"], data["analysis"], data["classification"]))
-                analyses.append(data["analysis"])
+                analyses.append((data["video"].get("published", ""), data["analysis"]))
 
-        # 영상 2개 이상일 때만 교차 인사이트 생성
+        # 종합 인사이트: synthesis_days 이내 영상만 참고
+        synthesis_days = topic.get("synthesis_days", 7)
+        cutoff = datetime.now(timezone.utc) - timedelta(days=synthesis_days)
+        recent_analyses = []
+        for pub_str, analysis in analyses:
+            try:
+                pub_dt = parsedate_to_datetime(pub_str)
+                if pub_dt >= cutoff:
+                    recent_analyses.append(analysis)
+            except Exception:
+                recent_analyses.append(analysis)
+
         synthesis = {}
-        if len(analyses) >= 2:
-            print(f"  [synthesize] {topic_id} ({len(analyses)}개 분석 종합 중...)")
-            synthesis = synthesize_topic(topic, analyses)
+        if len(recent_analyses) >= 2:
+            print(f"  [synthesize] {topic_id} — 최근 {synthesis_days}일치 {len(recent_analyses)}개 종합 중...")
+            synthesis = synthesize_topic(topic, recent_analyses)
 
         render_topic_page(topic_map[topic_id], "\n".join(all_cards), output_dir,
                           channels=active_channels, synthesis=synthesis)

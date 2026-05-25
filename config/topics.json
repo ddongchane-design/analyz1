@@ -1,9 +1,9 @@
 {
   "topics": [
-    { "id": "robot",   "label": "로봇/피지컬AI", "keywords": ["로봇", "로보틱스", "피지컬AI", "휴머노이드"] },
-    { "id": "economy", "label": "경제/매크로",   "keywords": ["금리", "인플레", "매크로", "연준", "달러"] },
-    { "id": "tech",    "label": "테크/AI",       "keywords": ["AI", "엔비디아", "반도체", "데이터센터"] },
-    { "id": "stock",   "label": "주식/투자",      "keywords": ["주식", "투자", "나스닥", "S&P", "팔란티어"] },
-    { "id": "energy",  "label": "에너지",         "keywords": ["전력", "전력기기", "에너지", "원전"] }
+    { "id": "robot",   "label": "로봇/피지컬AI", "keywords": ["로봇", "로보틱스", "피지컬AI", "휴머노이드"], "synthesis_days": 7 },
+    { "id": "economy", "label": "경제/매크로",   "keywords": ["금리", "인플레", "매크로", "연준", "달러"],  "synthesis_days": 30 },
+    { "id": "tech",    "label": "테크/AI",       "keywords": ["AI", "엔비디아", "반도체", "데이터센터"],    "synthesis_days": 7 },
+    { "id": "stock",   "label": "주식/투자",      "keywords": ["주식", "투자", "나스닥", "S&P", "팔란티어"], "synthesis_days": 7 },
+    { "id": "energy",  "label": "에너지",         "keywords": ["전력", "전력기기", "에너지", "원전"],        "synthesis_days": 7 }
   ]
 }
