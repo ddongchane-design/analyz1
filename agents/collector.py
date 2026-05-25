@@ -1,6 +1,7 @@
 import feedparser
 import json
 import yt_dlp
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 SEEN_PATH = Path("data/seen_videos.json")
@@ -36,10 +37,16 @@ def fetch_new_videos(channel: dict) -> list:
         print(f"  [초기화] 기존 영상 {len(feed_ids)}개 스킵, 이후 새 영상부터 분석")
         return []
 
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=26)
+
     new_videos = []
     for entry in feed.entries:
         video_id = entry.yt_videoid
         if video_id in seen:
+            continue
+        published = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
+        if published < cutoff:
+            seen.add(video_id)
             continue
         new_videos.append({
             "id": video_id,
@@ -50,6 +57,7 @@ def fetch_new_videos(channel: dict) -> list:
             "thumbnail": f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
         })
 
+    save_seen(seen)
     return new_videos
 
 

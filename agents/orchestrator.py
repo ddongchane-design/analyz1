@@ -17,6 +17,7 @@ def run():
 
     topic_cards = {t["id"]: [] for t in topics}
     valid_topic_ids = {t["id"] for t in topics}
+    new_count = 0
 
     for channel in channels:
         if not channel["active"]:
@@ -55,7 +56,6 @@ def run():
             card_html = render_card(video, analysis, classification)
             topic_cards[primary].append(card_html)
 
-            # 분석 결과 저장
             result_dir = Path(f"data/analyzed/{primary}")
             result_dir.mkdir(parents=True, exist_ok=True)
             result_path = result_dir / f"{video['id']}.json"
@@ -66,10 +66,16 @@ def run():
             )
 
             seen.add(video["id"])
+            new_count += 1
             print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
             time.sleep(random.uniform(5, 10))
 
-    # HTML 파일 생성
+    if new_count == 0:
+        print("\n[완료] 새 영상 없음 — HTML 유지")
+        save_seen(seen)
+        return
+
+    # 새 영상이 있을 때만 HTML 전체 재생성 (기존 데이터 포함)
     output_dir = Path("output/html")
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -77,10 +83,25 @@ def run():
     topic_map = {t["id"]: t for t in topics}
     topic_card_counts = {}
 
-    active_channels = [ch["name"] for ch in channels if ch["active"]]
     for topic_id, cards in topic_cards.items():
-        render_topic_page(topic_map[topic_id], "\n".join(cards), output_dir, channels=active_channels)
-        topic_card_counts[topic_id] = len(cards)
+        # 기존 분석 데이터 로드 후 날짜순 정렬
+        analyzed_dir = Path(f"data/analyzed/{topic_id}")
+        all_cards = []
+        if analyzed_dir.exists():
+            entries = []
+            for json_file in analyzed_dir.glob("*.json"):
+                try:
+                    data = json.loads(json_file.read_text(encoding="utf-8"))
+                    entries.append(data)
+                except Exception as e:
+                    print(f"  [warn] {json_file.name} 로드 실패: {e}")
+            entries.sort(key=lambda x: x["video"].get("published", ""), reverse=True)
+            for data in entries:
+                all_cards.append(render_card(data["video"], data["analysis"], data["classification"]))
+
+        active_channels = [ch["name"] for ch in channels if ch["active"]]
+        render_topic_page(topic_map[topic_id], "\n".join(all_cards), output_dir, channels=active_channels)
+        topic_card_counts[topic_id] = len(all_cards)
 
     render_index(topics, topic_card_counts, output_dir)
 
