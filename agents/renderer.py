@@ -174,6 +174,7 @@ TOPIC_TEMPLATE = """<!DOCTYPE html>
   </header>
 
   <main class="relative z-10 max-w-[1400px] mx-auto px-8 py-10">
+    {synthesis}
     <div id="cardGrid" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
       {cards}
     </div>
@@ -302,7 +303,63 @@ def render_card(video: dict, analysis: dict, classification: dict) -> str:
     )
 
 
-def render_topic_page(topic: dict, cards_html: str, output_dir: Path, channels: list = None):
+CONSENSUS_STYLE = {
+    "bullish": {"label": "BULLISH", "color": "#10d98a", "bg": "rgba(16,217,138,0.10)", "border": "rgba(16,217,138,0.30)"},
+    "bearish": {"label": "BEARISH", "color": "#ff4f72", "bg": "rgba(255,79,114,0.10)", "border": "rgba(255,79,114,0.30)"},
+    "neutral": {"label": "NEUTRAL", "color": "#f5c842", "bg": "rgba(245,200,66,0.10)",  "border": "rgba(245,200,66,0.30)"},
+}
+
+SYNTHESIS_BANNER = """
+<div class="mb-8 bg-gradient-to-br from-slate-800/70 to-slate-900/50 border border-{color}-400/25 rounded-2xl p-6">
+  <div class="flex items-center gap-3 mb-4">
+    <span class="text-[10px] font-bold tracking-widest text-{color}-400 uppercase">AI 종합 인사이트</span>
+    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+      style="background:{cs_bg};color:{cs_color};border-color:{cs_border}">
+      <span class="w-1.5 h-1.5 rounded-full" style="background:{cs_color}"></span>
+      {cs_label}
+    </span>
+  </div>
+  <p class="text-[13px] text-slate-300 leading-relaxed mb-4">{cross_insight}</p>
+  <div class="flex flex-wrap gap-4 text-[12px]">
+    <div class="flex-1 min-w-[200px]">
+      <p class="text-[10px] font-bold tracking-widest text-slate-500 uppercase mb-2">주요 테마</p>
+      <div class="flex flex-wrap gap-1.5">{themes_html}</div>
+    </div>
+    <div class="flex-1 min-w-[200px]">
+      <p class="text-[10px] font-bold tracking-widest text-slate-500 uppercase mb-2">주목 종목/섹터</p>
+      <div class="flex flex-wrap gap-1.5">{watchlist_html}</div>
+    </div>
+  </div>
+  {divergence_html}
+</div>"""
+
+DIVERGENCE_HTML = '<p class="text-[11px] text-slate-500 mt-3 border-t border-slate-700/50 pt-3">⚡ {divergence}</p>'
+
+
+def _render_synthesis_banner(synthesis: dict, color: str) -> str:
+    if not synthesis:
+        return ""
+    cs = CONSENSUS_STYLE.get(synthesis.get("consensus", "neutral"), CONSENSUS_STYLE["neutral"])
+    themes_html = "".join(
+        f'<span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-400">{t}</span>'
+        for t in synthesis.get("key_themes", [])
+    )
+    watchlist_html = "".join(
+        f'<span class="px-2 py-0.5 rounded-md text-[10px] bg-{color}-500/10 border border-{color}-400/30 text-{color}-400">{w}</span>'
+        for w in synthesis.get("watch_list", [])
+    )
+    divergence_html = DIVERGENCE_HTML.format(divergence=synthesis["divergence"]) if synthesis.get("divergence") else ""
+    return SYNTHESIS_BANNER.format(
+        color=color,
+        cs_bg=cs["bg"], cs_color=cs["color"], cs_border=cs["border"], cs_label=cs["label"],
+        cross_insight=synthesis.get("cross_insight", ""),
+        themes_html=themes_html,
+        watchlist_html=watchlist_html,
+        divergence_html=divergence_html,
+    )
+
+
+def render_topic_page(topic: dict, cards_html: str, output_dir: Path, channels: list = None, synthesis: dict = None):
     tid   = topic["id"]
     pal   = TOPIC_PALETTE.get(tid, TOPIC_PALETTE["tech"])
     color = pal["color"]
@@ -310,6 +367,8 @@ def render_topic_page(topic: dict, cards_html: str, output_dir: Path, channels: 
 
     if not cards_html.strip():
         cards_html = ""
+
+    synthesis_html = _render_synthesis_banner(synthesis or {}, color)
 
     ch_btns = ""
     if channels:
@@ -328,6 +387,7 @@ def render_topic_page(topic: dict, cards_html: str, output_dir: Path, channels: 
         topic_id=tid,
         color=color,
         emoji=emoji,
+        synthesis=synthesis_html,
         cards=cards_html,
         channel_btns=ch_btns,
         updated=datetime.now().strftime("%Y.%m.%d %H:%M"),
