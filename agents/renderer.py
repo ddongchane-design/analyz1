@@ -1,5 +1,16 @@
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+KST = timezone(timedelta(hours=9))
+
+
+def _to_kst_date(pub_str: str) -> str:
+    try:
+        dt = datetime.fromisoformat(pub_str).astimezone(KST)
+        return dt.strftime("%Y-%m-%d")
+    except Exception:
+        return pub_str[:10]
+
 
 # 토픽별 컬러 팔레트 (kinetic-oracle-hub 스타일)
 TOPIC_PALETTE = {
@@ -293,7 +304,7 @@ def render_card(video: dict, analysis: dict, classification: dict) -> str:
         thumbnail=video.get("thumbnail", ""),
         title=video["title"],
         channel=video["channel_name"],
-        date=video["published"][:10],
+        date=_to_kst_date(video["published"]),
         url=video["url"],
         sig_bg=ss["bg"], sig_text=ss["text"], sig_border=ss["border"], sig_dot=ss["dot"], sig_label=ss["label"],
         insight=analysis.get("insight", ""),
@@ -390,7 +401,7 @@ def render_topic_page(topic: dict, cards_html: str, output_dir: Path, channels: 
         synthesis=synthesis_html,
         cards=cards_html,
         channel_btns=ch_btns,
-        updated=datetime.now().strftime("%Y.%m.%d %H:%M"),
+        updated=datetime.now(KST).strftime("%Y.%m.%d %H:%M"),
     )
     out = output_dir / f"{tid}.html"
     out.write_text(html, encoding="utf-8")
@@ -419,7 +430,7 @@ def render_index(topics: list, topic_card_counts: dict, output_dir: Path):
     html = INDEX_TEMPLATE.format(
         head=SHARED_HEAD,
         topic_cards=cards_html,
-        updated=datetime.now().strftime("%Y.%m.%d %H:%M"),
+        updated=datetime.now(KST).strftime("%Y.%m.%d %H:%M"),
     )
     out = output_dir / "index.html"
     out.write_text(html, encoding="utf-8")
