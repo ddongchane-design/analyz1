@@ -3,7 +3,6 @@ import os
 import time
 import random
 from datetime import datetime, timezone, timedelta
-from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 from agents.collector import fetch_new_videos, fetch_transcript, load_seen, save_seen
@@ -39,7 +38,7 @@ def run():
 
             transcript = fetch_transcript(video["id"])
             if not transcript:
-                pub_dt = parsedate_to_datetime(video["published"])
+                pub_dt = datetime.fromisoformat(video["published"])
                 age_hours = (datetime.now(timezone.utc) - pub_dt).total_seconds() / 3600
                 if age_hours >= 9:
                     print(f"  [skip] 자막 없음 (업로드 {age_hours:.0f}h 경과 → 포기)")
@@ -117,7 +116,7 @@ def run():
         recent_analyses = []
         for pub_str, analysis in analyses:
             try:
-                pub_dt = parsedate_to_datetime(pub_str)
+                pub_dt = datetime.fromisoformat(pub_str)
                 if pub_dt >= cutoff:
                     recent_analyses.append(analysis)
             except Exception:
