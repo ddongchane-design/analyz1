@@ -39,8 +39,13 @@ def run():
 
             transcript = fetch_transcript(video["id"])
             if not transcript:
-                print("  [skip] 자막 없음")
-                seen.add(video["id"])
+                pub_dt = parsedate_to_datetime(video["published"])
+                age_hours = (datetime.now(timezone.utc) - pub_dt).total_seconds() / 3600
+                if age_hours >= 6:
+                    print(f"  [skip] 자막 없음 (업로드 {age_hours:.0f}h 경과 → 포기)")
+                    seen.add(video["id"])
+                else:
+                    print(f"  [retry] 자막 없음 (업로드 {age_hours:.1f}h — 다음 실행에서 재시도)")
                 time.sleep(random.uniform(3, 6))
                 continue
 
