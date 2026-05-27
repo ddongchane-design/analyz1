@@ -41,7 +41,7 @@ def run():
             if not transcript:
                 pub_dt = parsedate_to_datetime(video["published"])
                 age_hours = (datetime.now(timezone.utc) - pub_dt).total_seconds() / 3600
-                if age_hours >= 6:
+                if age_hours >= 9:
                     print(f"  [skip] 자막 없음 (업로드 {age_hours:.0f}h 경과 → 포기)")
                     seen.add(video["id"])
                 else:
