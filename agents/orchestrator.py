@@ -184,9 +184,7 @@ def run():
                     encoding="utf-8"
                 )
 
-                # Delete processed pending file
-                p_file.unlink()
-                print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
+
                 time.sleep(random.uniform(10, 20))
             except Exception as e:
                 print(f"  [error] {p_file.name} 처리 중 오류 발생: {e}")
