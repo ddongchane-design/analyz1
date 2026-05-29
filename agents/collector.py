@@ -48,29 +48,37 @@ def _fetch_via_ytdlp(channel_id: str, limit: int = 15) -> list:
                     video_id = item.get("id")
                     title = item.get("title")
                     upload_date = item.get("upload_date")  # YYYYMMDD string
+                    timestamp = item.get("timestamp")
                     
                     if not video_id or not title:
                         continue
                         
+                    is_date_fallback = False
+                    dt = None
                     if upload_date:
                         try:
                             dt = datetime.strptime(upload_date, "%Y%m%d")
-                            published_parsed = dt.timetuple()
-                            published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
                         except Exception:
-                            dt = datetime.now()
-                            published_parsed = dt.timetuple()
-                            published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
-                    else:
-                        dt = datetime.now()
-                        published_parsed = dt.timetuple()
-                        published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                            pass
+                    if not dt and timestamp:
+                        try:
+                            dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+                        except Exception:
+                            pass
+                            
+                    if not dt:
+                        dt = datetime.now(timezone.utc)
+                        is_date_fallback = True
+                        
+                    published_parsed = dt.timetuple()
+                    published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
                         
                     entries.append(SimpleNamespace(
                         yt_videoid=video_id,
                         title=title,
                         published_parsed=published_parsed,
-                        published=published
+                        published=published,
+                        is_date_fallback=is_date_fallback
                     ))
     except Exception as e:
         print(f"  [warn] yt-dlp 우회 실패: {e}")
@@ -105,8 +113,18 @@ def fetch_new_videos(channel: dict, seen: set) -> list:
     if not channel_ids_in_seen:
         cutoff_24h = datetime.now(timezone.utc) - timedelta(hours=24)
         skipped_count = 0
-        for entry in feed_entries:
+        for i, entry in enumerate(feed_entries):
             vid = entry.yt_videoid
+            
+            # 날짜를 정확히 모르는 경우 (fallback 된 경우)
+            # 플레이리스트의 첫 번째(가장 최신) 영상만 남기고 나머지는 오래된 영상으로 보고 스킵 처리
+            is_fallback = getattr(entry, "is_date_fallback", False)
+            if is_fallback:
+                if i > 0:
+                    seen.add(vid)
+                    skipped_count += 1
+                continue
+                
             try:
                 pub_dt = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
             except Exception:
@@ -120,10 +138,16 @@ def fetch_new_videos(channel: dict, seen: set) -> list:
     cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
 
     new_videos = []
-    for entry in feed_entries:
+    for i, entry in enumerate(feed_entries):
         video_id = entry.yt_videoid
         if video_id in seen:
             continue
+            
+        is_fallback = getattr(entry, "is_date_fallback", False)
+        if is_fallback and i > 0:
+            seen.add(video_id)
+            continue
+            
         try:
             published = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
         except Exception:
