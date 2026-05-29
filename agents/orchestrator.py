@@ -170,10 +170,10 @@ def run():
                     continue
 
                 classification = classify_video(analysis, topics)
-                primary = classification.get("primary_topic", "tech")
+                primary = classification.get("primary_topic", "etc")
 
                 if primary not in valid_topic_ids:
-                    primary = "tech"
+                    primary = "etc"
 
                 result_dir = Path(f"data/analyzed/{primary}")
                 result_dir.mkdir(parents=True, exist_ok=True)
@@ -184,7 +184,19 @@ def run():
                     encoding="utf-8"
                 )
 
+                # Delete processed pending file
+                p_file.unlink()
 
+                # Delete synthesis cache for this topic to force regeneration next time
+                synthesis_cache = Path("data/synthesis") / f"{primary}.json"
+                if synthesis_cache.exists():
+                    try:
+                        synthesis_cache.unlink()
+                        print(f"  [cache invalidation] Deleted synthesis cache for '{primary}' due to new analyzed video.")
+                    except Exception as e:
+                        print(f"  [warn] Failed to delete synthesis cache: {e}")
+
+                print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
                 time.sleep(random.uniform(10, 20))
             except Exception as e:
                 print(f"  [error] {p_file.name} 처리 중 오류 발생: {e}")

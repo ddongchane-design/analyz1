@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" class="dark">
 <head>
-  <title>YouTube Insight | 에너지</title>
+  <title>YouTube Insight | 기타/시사/뉴스</title>
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +35,7 @@
 <body class="bg-bg text-white min-h-screen relative">
 
   <!-- Glowing Blobs -->
-  <div class="fixed top-[-10%] left-[-5%] w-[35%] h-[35%] bg-orange-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="fixed top-[-10%] left-[-5%] w-[35%] h-[35%] bg-slate-500/10 blur-[150px] rounded-full pointer-events-none"></div>
   <div class="fixed bottom-[-10%] right-[-5%] w-[25%] h-[35%] bg-purple-500/10 blur-[150px] rounded-full pointer-events-none"></div>
 
   <!-- Header -->
@@ -46,8 +46,8 @@
           <span class="material-symbols-outlined text-base">arrow_back</span> 전체
         </a>
         <div>
-          <h1 class="font-manrope text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-white">
-            ⚡ 에너지
+          <h1 class="font-manrope text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-white">
+            📰 기타/시사/뉴스
           </h1>
           <p class="text-xs text-slate-500">AI 분석 인사이트</p>
         </div>
@@ -59,22 +59,22 @@
     <div class="max-w-[1400px] mx-auto px-8 pb-3 flex items-center gap-2 flex-wrap">
       <span class="text-xs text-slate-500 mr-1">채널</span>
       <button onclick="filterCh(this,'all')" data-ch="all"
-        class="ch-btn text-xs px-3 py-1 rounded-full border border-orange-400/50 bg-orange-500/15 text-orange-300 font-semibold transition-all">
+        class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-400/50 bg-slate-500/15 text-slate-300 font-semibold transition-all">
         전체
       </button>
-      <button onclick="filterCh(this,'월텍남')" data-ch="월텍남" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">월텍남</button>
-<button onclick="filterCh(this,'매경월가월부')" data-ch="매경월가월부" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">매경월가월부</button>
-<button onclick="filterCh(this,'엔지니어TV')" data-ch="엔지니어TV" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">엔지니어TV</button>
-<button onclick="filterCh(this,'안될공학_-_IT_테크_신기술')" data-ch="안될공학_-_IT_테크_신기술" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">안될공학 - IT 테크 신기술</button>
-<button onclick="filterCh(this,'안될과학_Unrealscience')" data-ch="안될과학_Unrealscience" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">안될과학 Unrealscience</button>
-<button onclick="filterCh(this,'수페TV')" data-ch="수페TV" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">수페TV</button>
-<button onclick="filterCh(this,'한경_글로벌마켓')" data-ch="한경_글로벌마켓" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">한경 글로벌마켓</button>
-<button onclick="filterCh(this,'Softdragon_SOD')" data-ch="Softdragon_SOD" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">Softdragon SOD</button>
-<button onclick="filterCh(this,'이효석아카데미')" data-ch="이효석아카데미" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">이효석아카데미</button>
-<button onclick="filterCh(this,'Smart_Money_by_MiraeAsset_')" data-ch="Smart_Money_by_MiraeAsset_" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">Smart Money by MiraeAsset </button>
-<button onclick="filterCh(this,'디파이_농부_조선생_|_Professor_Jo')" data-ch="디파이_농부_조선생_|_Professor_Jo" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">디파이 농부 조선생 | Professor Jo</button>
-<button onclick="filterCh(this,'삼프로TV_3ProTV')" data-ch="삼프로TV_3ProTV" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">삼프로TV_3ProTV</button>
-<button onclick="filterCh(this,'언더스탠딩_Understanding')" data-ch="언더스탠딩_Understanding" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-orange-400/50 hover:text-orange-300 transition-all">언더스탠딩_Understanding</button>
+      <button onclick="filterCh(this,'월텍남')" data-ch="월텍남" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">월텍남</button>
+<button onclick="filterCh(this,'매경월가월부')" data-ch="매경월가월부" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">매경월가월부</button>
+<button onclick="filterCh(this,'엔지니어TV')" data-ch="엔지니어TV" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">엔지니어TV</button>
+<button onclick="filterCh(this,'안될공학_-_IT_테크_신기술')" data-ch="안될공학_-_IT_테크_신기술" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">안될공학 - IT 테크 신기술</button>
+<button onclick="filterCh(this,'안될과학_Unrealscience')" data-ch="안될과학_Unrealscience" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">안될과학 Unrealscience</button>
+<button onclick="filterCh(this,'수페TV')" data-ch="수페TV" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">수페TV</button>
+<button onclick="filterCh(this,'한경_글로벌마켓')" data-ch="한경_글로벌마켓" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">한경 글로벌마켓</button>
+<button onclick="filterCh(this,'Softdragon_SOD')" data-ch="Softdragon_SOD" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">Softdragon SOD</button>
+<button onclick="filterCh(this,'이효석아카데미')" data-ch="이효석아카데미" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">이효석아카데미</button>
+<button onclick="filterCh(this,'Smart_Money_by_MiraeAsset_')" data-ch="Smart_Money_by_MiraeAsset_" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">Smart Money by MiraeAsset </button>
+<button onclick="filterCh(this,'디파이_농부_조선생_|_Professor_Jo')" data-ch="디파이_농부_조선생_|_Professor_Jo" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">디파이 농부 조선생 | Professor Jo</button>
+<button onclick="filterCh(this,'삼프로TV_3ProTV')" data-ch="삼프로TV_3ProTV" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">삼프로TV_3ProTV</button>
+<button onclick="filterCh(this,'언더스탠딩_Understanding')" data-ch="언더스탠딩_Understanding" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-slate-400/50 hover:text-slate-300 transition-all">언더스탠딩_Understanding</button>
 
       <div class="ml-auto flex gap-2">
         <button onclick="filterSig(this,'bullish')" data-sig="bullish"
@@ -107,7 +107,7 @@
   <script>
     let activeCh = 'all', activeSig = null;
     function filterCh(btn, ch) {
-      document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('!bg-orange-500/15','!border-orange-400/50','!text-orange-300','font-semibold'));
+      document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('!bg-slate-500/15','!border-slate-400/50','!text-slate-300','font-semibold'));
       btn.classList.add('font-semibold');
       activeCh = ch; applyFilter();
     }

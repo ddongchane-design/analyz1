@@ -21,6 +21,7 @@ TOPIC_PALETTE = {
     "energy":  {"color": "orange", "hex": "#fb923c", "emoji": "⚡"},
     "crypto":  {"color": "fuchsia", "hex": "#d946ef", "emoji": "🪙"},
     "space":   {"color": "violet",  "hex": "#a78bfa", "emoji": "🚀"},
+    "etc":     {"color": "slate",   "hex": "#94a3b8", "emoji": "📰"},
 }
 
 SIGNAL_STYLE = {
@@ -122,6 +123,7 @@ TOPIC_ICON = {
     "energy": "bolt",
     "crypto": "currency_exchange",
     "space": "rocket_launch",
+    "etc": "newspaper",
 }
 
 TOPIC_SHADOW = {
@@ -132,6 +134,7 @@ TOPIC_SHADOW = {
     "energy":  "rgba(251,146,60,0.15)",
     "crypto":  "rgba(217,70,239,0.15)",
     "space":   "rgba(167,139,250,0.15)",
+    "etc":     "rgba(148,163,184,0.15)",
 }
 
 # ───────────────────────── TOPIC PAGE ─────────────────────────

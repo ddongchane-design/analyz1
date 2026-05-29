@@ -6,6 +6,7 @@
     { "id": "stock",   "label": "주식/투자",      "keywords": ["주식", "투자", "나스닥", "S&P", "팔란티어"], "synthesis_days": 7 },
     { "id": "energy",  "label": "에너지",         "keywords": ["전력", "전력기기", "에너지", "원전"],        "synthesis_days": 7 },
     { "id": "crypto",  "label": "크립토/암호화폐", "keywords": ["비트코인", "이더리움", "가상자산", "암호화폐", "가상화폐", "크립토", "코인", "솔라나", "리플", "ETF"], "synthesis_days": 30 },
-    { "id": "space",   "label": "우주산업",       "keywords": ["우주", "위성", "달탐사", "아르테미스", "착륙선", "NASA", "스페이스X", "발사체", "천문연구원"], "synthesis_days": 7 }
+    { "id": "space",   "label": "우주산업",       "keywords": ["우주", "위성", "달탐사", "아르테미스", "착륙선", "NASA", "스페이스X", "발사체", "천문연구원"], "synthesis_days": 7 },
+    { "id": "etc",     "label": "기타/시사/뉴스", "keywords": ["시사", "뉴스", "브리핑", "인터뷰", "잡담"], "synthesis_days": 7 }
   ]
 }

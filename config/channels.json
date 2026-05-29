@@ -76,7 +76,20 @@
       "handle": "@Web3World",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC7H3LGAlRWd3_fm5yOS_piw",
       "active": true
+    },
+    {
+      "id": "UChlv4GSd7OQl3js-jkLOnFA",
+      "name": "삼프로TV_3ProTV",
+      "handle": "@3protv",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UChlv4GSd7OQl3js-jkLOnFA",
+      "active": true
+    },
+    {
+      "id": "UCIUni4ScRp4mqPXsxy62L5w",
+      "name": "언더스탠딩_Understanding",
+      "handle": "@understanding_official",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCIUni4ScRp4mqPXsxy62L5w",
+      "active": true
     }
   ]
 }
-
