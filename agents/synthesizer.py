@@ -42,17 +42,29 @@ def synthesize_topic(topic: dict, analyses: list) -> dict:
         topic_label=topic["label"],
         analyses=json.dumps(analyses, ensure_ascii=False, indent=2)
     )
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-    except Exception as e:
-        print(f"  [warn] Gemini 종합 오류: {e}")
+    
+    response_text = None
+    for attempt in range(2):
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
+            response_text = response.text
+            break
+        except Exception as e:
+            print(f"  [warn] Gemini 종합 오류 (시도 {attempt+1}/2): {e}")
+            if attempt < 1:
+                import time
+                print("  [retry] 30초 후 종합 재시도...")
+                time.sleep(30)
+            else:
+                return {}
+
+    if not response_text:
         return {}
 
-    text = response.text
-    match = re.search(r'\{.*\}', text, re.DOTALL)
+    match = re.search(r'\{.*\}', response_text, re.DOTALL)
     if match:
         try:
             return json.loads(match.group())

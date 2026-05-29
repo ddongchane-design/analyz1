@@ -41,7 +41,7 @@ def classify_video(analysis: dict, topics: list, model=None) -> dict:
         )
     except Exception as e:
         print(f"  [warn] Gemini 분류 오류: {e}")
-        return {"primary_topic": "tech", "secondary_topics": [], "tags": []}
+        return {"primary_topic": "etc", "secondary_topics": [], "tags": []}
 
     text = response.text
     match = re.search(r'\{.*\}', text, re.DOTALL)
@@ -50,4 +50,5 @@ def classify_video(analysis: dict, topics: list, model=None) -> dict:
             return json.loads(match.group())
         except json.JSONDecodeError:
             pass
-    return {"primary_topic": "tech", "secondary_topics": [], "tags": []}
+    return {"primary_topic": "etc", "secondary_topics": [], "tags": []}
+
