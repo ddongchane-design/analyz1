@@ -77,7 +77,12 @@ def render_dashboard():
     topic_map = {t["id"]: t for t in topics}
     topic_card_counts = {}
 
-    active_channels = [ch["name"] for ch in channels if ch["active"]]
+    active_sorted_channels = sorted(
+        [ch for ch in channels if ch.get("active", True)],
+        key=lambda x: x.get("subscribers", 0),
+        reverse=True
+    )
+    active_channels = [ch["name"] for ch in active_sorted_channels]
 
     for topic in topics:
         topic_id = topic["id"]
