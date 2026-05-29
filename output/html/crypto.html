@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <title>YouTube Insight | 크립토/암호화폐</title>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            bg:      "#0b1326",
+            surface: "#101931",
+            card:    "#16213e",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+  </style>
+
+</head>
+<body class="bg-bg text-white min-h-screen relative">
+
+  <!-- Glowing Blobs -->
+  <div class="fixed top-[-10%] left-[-5%] w-[35%] h-[35%] bg-fuchsia-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] right-[-5%] w-[25%] h-[35%] bg-purple-500/10 blur-[150px] rounded-full pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-bg/80 backdrop-blur-xl border-b border-slate-800/60">
+    <div class="max-w-[1400px] mx-auto px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-1 text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-800/50">
+          <span class="material-symbols-outlined text-base">arrow_back</span> 전체
+        </a>
+        <div>
+          <h1 class="font-manrope text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-white">
+            🪙 크립토/암호화폐
+          </h1>
+          <p class="text-xs text-slate-500">AI 분석 인사이트</p>
+        </div>
+      </div>
+      <span class="text-xs text-slate-600">2026.05.29 13:36</span>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="max-w-[1400px] mx-auto px-8 pb-3 flex items-center gap-2 flex-wrap">
+      <span class="text-xs text-slate-500 mr-1">채널</span>
+      <button onclick="filterCh(this,'all')" data-ch="all"
+        class="ch-btn text-xs px-3 py-1 rounded-full border border-fuchsia-400/50 bg-fuchsia-500/15 text-fuchsia-300 font-semibold transition-all">
+        전체
+      </button>
+      <button onclick="filterCh(this,'월텍남')" data-ch="월텍남" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-fuchsia-400/50 hover:text-fuchsia-300 transition-all">월텍남</button>
+<button onclick="filterCh(this,'매경월가월부')" data-ch="매경월가월부" class="ch-btn text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-fuchsia-400/50 hover:text-fuchsia-300 transition-all">매경월가월부</button>
+
+      <div class="ml-auto flex gap-2">
+        <button onclick="filterSig(this,'bullish')" data-sig="bullish"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 transition-all">
+          ▲ 강세
+        </button>
+        <button onclick="filterSig(this,'bearish')" data-sig="bearish"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-rose-500/30 text-rose-400 hover:bg-rose-500/15 transition-all">
+          ▼ 약세
+        </button>
+        <button onclick="filterSig(this,'neutral')" data-sig="neutral"
+          class="sig-btn text-[11px] px-3 py-1 rounded-full border border-amber-500/30 text-amber-400 hover:bg-amber-500/15 transition-all">
+          ● 중립
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-[1400px] mx-auto px-8 py-10">
+    
+    <div id="cardGrid" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+      
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-fuchsia-400/40 hover:shadow-[0_8px_32px_rgba(217,70,239,0.15)] relative overflow-hidden"
+     data-ch="매경월가월부" data-sig="neutral">
+  <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/fOJhajxVvgo/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-fuchsia-200 transition-colors">4월 PCE 3년새 최고치, 예측치엔 부합ㅣ드론 섹터, 美국방부  투자확대 검토에 급등ㅣ이더리움, 2천달러 밑으로 하회ㅣ홍키자의 매일뉴욕</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-fuchsia-500/15 text-fuchsia-300 border border-fuchsia-400/30">매경월가월부</span>
+        <span class="text-[11px] text-slate-500">2026-05-28</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(245,200,66,0.12);color:#f5c842;border-color:rgba(245,200,66,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#f5c842"></span>
+        NEUTRAL
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-fuchsia-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">단기적인 물가 지표 완화가 연준의 추가 금리 인상 압박을 줄여주었으나, 이는 금리 인하를 의미하지 않으며, 오히려 고금리가 구조적으로 고착화되어 실물 경제, 특히 부동산 시장과 관련 파생 산업 전반에 걸쳐 심각한 수요 감소와 부작용을 초래할 수 있습니다. AI 관련 기술 기업들은 개별적인 성장 동력을 통해 시장의 불확실성을 상쇄하는 모습을 보이지만, 전반적인 시장은 매크로 환경 변화에 민감하게 반응하며 섹터별 양극화가 심화될 것입니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>4월 PCE 지표는 높은 연간 물가 상승률에도 불구하고 단기 물가 압력 둔화로 시장에 안도감을 주었으며, 연준의 급격한 추가 금리 인상 압박은 완화되었습니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>고금리 환경이 실물 경제(특히 부동산 시장)에 심각한 부작용을 초래하며 소비 빙하기로 전이될 수 있고, 금리 인하의 명분이 부족해 고금리가 구조적으로 고착화될 위험이 있습니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>마벨 테크놀로지는 AI 인프라 구축 및 맞춤형 AI 반도체 분야에서 강력한 성장 잠재력을 보이며 월가에서 높은 평가를 받고 있는 AI 사이클의 핵심 수혜 기업입니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>암호화폐 시장은 이더리움 2,000달러 하회 및 비트코인 약세로 좋지 않은 흐름을 보이며, 관련 기업(MSTR)의 주가도 크게 하락하고 있습니다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자들은 매크로 지표의 단기적 변화에 일희일비하기보다, 고금리 장기화 가능성에 대비하여 실물 경제에 미치는 부정적 영향을 고려하고, AI 사이클의 직접적인 수혜를 받는 개별 기업(예: Marvell)에 대한 심층 분석을 통해 포트폴리오를 재편하는 전략을 고려해야 합니다. 특히 부동산 및 소비 관련 섹터의 추가적인 하방 위험에 유의해야 합니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">금리</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">인플레이션</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">AI</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">반도체</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">부동산 시장</span></div>
+    <a href="https://www.youtube.com/watch?v=fOJhajxVvgo" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-fuchsia-500/15 hover:bg-fuchsia-500/25 text-fuchsia-300 border border-fuchsia-400/30 hover:border-fuchsia-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<div class="insight-card group bg-card/60 backdrop-blur-xl border border-slate-700/50 rounded-[1.5rem] p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-fuchsia-400/40 hover:shadow-[0_8px_32px_rgba(217,70,239,0.15)] relative overflow-hidden"
+     data-ch="매경월가월부" data-sig="bullish">
+  <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.5rem] pointer-events-none"></div>
+
+  <!-- Top: thumbnail + title + signal -->
+  <div class="flex gap-3 items-start">
+    <img src="https://img.youtube.com/vi/ijjjLJU1J0Y/hqdefault.jpg" class="w-24 h-[60px] rounded-xl object-cover bg-slate-800 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-slate-100 text-[14px] leading-snug line-clamp-2 group-hover:text-fuchsia-200 transition-colors">[어바웃 뉴욕] 미국 5위 피자 체인이 사실 주유소…주가 850달러의 비밀 | 이나연 특파원</h3>
+      <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-fuchsia-500/15 text-fuchsia-300 border border-fuchsia-400/30">매경월가월부</span>
+        <span class="text-[11px] text-slate-500">2026-05-20</span>
+      </div>
+    </div>
+    <div class="flex-shrink-0">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg border"
+        style="background:rgba(16,217,138,0.12);color:#10d98a;border-color:rgba(16,217,138,0.35)">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:#10d98a"></span>
+        BULLISH
+      </span>
+    </div>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-xl p-4">
+    <p class="text-[10px] font-bold tracking-widest text-fuchsia-400 mb-2 uppercase">Insight</p>
+    <p class="text-[13px] text-slate-300 leading-relaxed">주유소 비즈니스는 더 이상 단순히 기름을 파는 산업이 아니라, 전략적인 부동산 관리와 고마진 편의점/식음료 리테일 서비스 제공을 통해 고수익을 창출하는 복합적인 라이프스타일 거점으로 진화하고 있습니다. 이는 산업의 본질적 가치 이동을 의미하며, 전통적 시각을 벗어나 재평가될 필요가 있습니다. 특히 미국과 한국의 상반된 접근 방식은 각 시장의 성장 잠재력과 위험 요소를 평가하는 중요한 지표를 제공합니다.</p>
+  </div>
+
+  <!-- Key Claims -->
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>미국 주유소 산업은 브랜드(정유사), 운영사(매장 관리), 부동산 소유자(땅 주인)의 세 가지 주체로 나뉘며, 각기 다른 수익 구조를 가집니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>주유소의 진정한 수익 동력은 저마진의 유류 판매가 아닌, 고마진의 편의점(QuickChek), 피자(Casey's), 커피 등 비연료 부문 매출에서 나옵니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>부동산 리츠(Getty Realty)는 주유소 브랜드나 운영사 변경과 무관하게 안정적인 트리플넷 임대 수익을 창출하며, 이는 유가 변동성에 강한 매력적인 투자처입니다.</span></div>
+<div class="flex items-start gap-2 text-[12px] text-slate-400"><span class="text-slate-600 mt-0.5 flex-shrink-0">▸</span><span>미국 주유소 기업들은 사업 모델을 확장하며 종합 라이프스타일 거점으로 진화하는 반면, 한국은 주유소를 사양 산업으로 보고 부지를 물류센터 등으로 전환하는 상반된 움직임을 보입니다.</span></div>
+  </div>
+
+  <!-- Action Point -->
+  <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-3.5">
+    <p class="text-[10px] font-bold tracking-widest text-amber-300 mb-1.5 uppercase">Action Point</p>
+    <p class="text-[13px] text-slate-200 leading-relaxed">투자자는 주유소 관련 기업을 분석할 때, 유류 판매량이나 마진보다는 비연료 부문 매출 비중, 부동산 포트폴리오의 안정성, 그리고 미래 지향적인 사업 확장 전략(예: 전기차 충전소, 복합 상업 시설)을 핵심 지표로 삼아야 합니다. Casey's(KCS)와 같은 고마진 리테일 기업, Getty Realty와 같은 안정적인 리츠를 눈여겨보고, 한국 시장과의 전략적 차이를 비교하여 투자 기회를 모색할 수 있습니다.</p>
+  </div>
+
+  <!-- Tags + Link -->
+  <div class="flex items-center justify-between gap-2 pt-1">
+    <div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">주유소</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">리테일</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">부동산</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">사업 모델</span><span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-800/80 border border-slate-700/60 text-slate-500">투자 전략</span></div>
+    <a href="https://www.youtube.com/watch?v=ijjjLJU1J0Y" target="_blank"
+      class="flex-shrink-0 flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-xl bg-fuchsia-500/15 hover:bg-fuchsia-500/25 text-fuchsia-300 border border-fuchsia-400/30 hover:border-fuchsia-400/60 transition-all">
+      보기 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</div>
+    </div>
+    <div id="emptyMsg" class="hidden text-center py-24 text-slate-600">
+      <span class="material-symbols-outlined text-5xl mb-3 block opacity-30">inbox</span>
+      해당 조건의 영상이 없습니다.
+    </div>
+  </main>
+
+  <script>
+    let activeCh = 'all', activeSig = null;
+    function filterCh(btn, ch) {
+      document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('!bg-fuchsia-500/15','!border-fuchsia-400/50','!text-fuchsia-300','font-semibold'));
+      btn.classList.add('font-semibold');
+      activeCh = ch; applyFilter();
+    }
+    function filterSig(btn, sig) {
+      if (activeSig === sig) {
+        btn.classList.remove('!bg-emerald-500/15','!bg-rose-500/15','!bg-amber-500/15');
+        activeSig = null;
+      } else {
+        document.querySelectorAll('.sig-btn').forEach(b => b.classList.remove('!bg-emerald-500/15','!bg-rose-500/15','!bg-amber-500/15'));
+        const map = {bullish:'!bg-emerald-500/15', bearish:'!bg-rose-500/15', neutral:'!bg-amber-500/15'};
+        btn.classList.add(map[sig]);
+        activeSig = sig;
+      }
+      applyFilter();
+    }
+    function applyFilter() {
+      let visible = 0;
+      document.querySelectorAll('.insight-card').forEach(c => {
+        const ok = (activeCh==='all'||c.dataset.ch===activeCh) && (!activeSig||c.dataset.sig===activeSig);
+        c.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      });
+      document.getElementById('emptyMsg').classList.toggle('hidden', visible > 0);
+    }
+  </script>
+</body>
+</html>
