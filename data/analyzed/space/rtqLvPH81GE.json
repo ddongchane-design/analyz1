@@ -44,10 +44,11 @@
     "action_point": "SpaceX는 비상장이나, 장기적인 우주 경제 성장 가능성을 고려하여 관련 기술(위성 통신, 로켓 발사체 부품 및 서비스)에 투자할 기회를 모색해야 한다. 또한 6G 및 피지컬 AI 시대 도래에 따른 산업 변화와 파급 효과를 주시하며, 일론 머스크의 다른 상장 기업(테슬라 등)의 비전과 연계하여 투자 가치를 재평가하는 것이 중요하다."
   },
   "classification": {
-    "primary_topic": "tech",
+    "primary_topic": "space",
     "secondary_topics": [
       "robot",
-      "stock"
+      "stock",
+      "tech"
     ],
     "tags": [
       "SpaceX",

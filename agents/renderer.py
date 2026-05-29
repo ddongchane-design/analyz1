@@ -20,6 +20,7 @@ TOPIC_PALETTE = {
     "stock":   {"color": "emerald","hex": "#34d399", "emoji": "📈"},
     "energy":  {"color": "orange", "hex": "#fb923c", "emoji": "⚡"},
     "crypto":  {"color": "fuchsia", "hex": "#d946ef", "emoji": "🪙"},
+    "space":   {"color": "violet",  "hex": "#a78bfa", "emoji": "🚀"},
 }
 
 SIGNAL_STYLE = {
@@ -111,7 +112,7 @@ INDEX_CARD = """
   <div class="mt-5 flex items-center text-sm font-semibold opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-{color}-400">
     인사이트 보기 <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
   </div>
-</a>"""
+ </a>"""
 
 TOPIC_ICON = {
     "robot": "precision_manufacturing",
@@ -120,6 +121,7 @@ TOPIC_ICON = {
     "stock": "candlestick_chart",
     "energy": "bolt",
     "crypto": "currency_exchange",
+    "space": "rocket_launch",
 }
 
 TOPIC_SHADOW = {
@@ -129,6 +131,7 @@ TOPIC_SHADOW = {
     "stock":   "rgba(52,211,153,0.15)",
     "energy":  "rgba(251,146,60,0.15)",
     "crypto":  "rgba(217,70,239,0.15)",
+    "space":   "rgba(167,139,250,0.15)",
 }
 
 # ───────────────────────── TOPIC PAGE ─────────────────────────

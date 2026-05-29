@@ -52,9 +52,10 @@
     "action_point": "IPO 직후 발생할 수 있는 과열 및 단기 급락에 주의하고, 5월 말 예정된 투자 설명서 공개를 통해 구체적인 공모가와 주관사 평가를 확인해야 합니다. 만약 상장 후 주가가 적정 가치 대비 30~40% 이상 하락하는 시점이 온다면 분할 매수를 고려하거나, 스페이스X IPO로 인한 산업 전체 리레이팅 효과를 노려 우주항공 ETF에 간접 투자하는 방안도 유효할 수 있습니다."
   },
   "classification": {
-    "primary_topic": "stock",
+    "primary_topic": "space",
     "secondary_topics": [
-      "tech"
+      "tech",
+      "stock"
     ],
     "tags": [
       "IPO",

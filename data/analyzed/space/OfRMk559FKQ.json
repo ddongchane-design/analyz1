@@ -28,9 +28,10 @@
     "action_point": "NASA 아르테미스 프로젝트의 국내 협력 기관들과 민간 우주선/위성/로버 부품 공급망을 형성하는 국내 우주항공 및 고신뢰성 모빌리티 부품 기업들에 대한 장기적 관점의 비중 확대를 제안함."
   },
   "classification": {
-    "primary_topic": "tech",
+    "primary_topic": "space",
     "secondary_topics": [
-      "robot"
+      "robot",
+      "tech"
     ],
     "tags": [
       "아르테미스프로젝트",
