@@ -12,12 +12,11 @@ from agents.synthesizer import synthesize_topic
 from agents.renderer import render_card, render_topic_page, render_index
 
 
-def run():
+def collect_pending():
     channels = json.loads(Path("config/channels.json").read_text(encoding="utf-8"))["channels"]
-    topics   = json.loads(Path("config/topics.json").read_text(encoding="utf-8"))["topics"]
     seen     = load_seen()
-
-    valid_topic_ids = {t["id"] for t in topics}
+    pending_dir = Path("data/pending")
+    pending_dir.mkdir(parents=True, exist_ok=True)
     new_count = 0
 
     for channel in channels:
@@ -49,43 +48,30 @@ def run():
                 time.sleep(random.uniform(8, 15))
                 continue
 
-            analysis = analyze_video(video, transcript)
-            if not analysis:
-                print("  [retry] Gemini 오류 - 30초 후 재시도...")
-                time.sleep(30)
-                analysis = analyze_video(video, transcript)
-            if not analysis:
-                print("  [skip] 분석 실패 - 다음 실행에서 재시도")
-                continue
-
-            classification = classify_video(analysis, topics)
-            primary = classification.get("primary_topic", "tech")
-
-            if primary not in valid_topic_ids:
-                primary = "tech"
-
-            result_dir = Path(f"data/analyzed/{primary}")
-            result_dir.mkdir(parents=True, exist_ok=True)
-            result_path = result_dir / f"{video['id']}.json"
-            result_path.write_text(
-                json.dumps({"video": video, "analysis": analysis, "classification": classification},
-                           ensure_ascii=False, indent=2),
+            # Save to pending
+            pending_path = pending_dir / f"{video['id']}.json"
+            pending_path.write_text(
+                json.dumps({"video": video, "transcript": transcript}, ensure_ascii=False, indent=2),
                 encoding="utf-8"
             )
-
+            # Add to seen immediately so we don't try to download it again
             seen.add(video["id"])
             new_count += 1
-            print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
-            time.sleep(random.uniform(10, 20))
+            print(f"  [수집 완료] data/pending/{video['id']}.json 저장됨")
+            time.sleep(random.uniform(2, 5))
 
-    if new_count == 0:
-        print("\n[완료] 새 영상 없음 - HTML 유지")
-        save_seen(seen)
-        return
+    save_seen(seen)
+    print(f"\n[완료] 총 {new_count}개 신규 영상 임시 수집 완료")
 
-    # 누적 JSON 로드 → 카드 생성 + 분석 데이터 수집
+
+def render_dashboard():
+    channels = json.loads(Path("config/channels.json").read_text(encoding="utf-8"))["channels"]
+    topics   = json.loads(Path("config/topics.json").read_text(encoding="utf-8"))["topics"]
+
     output_dir = Path("output/html")
     output_dir.mkdir(parents=True, exist_ok=True)
+    synthesis_dir = Path("data/synthesis")
+    synthesis_dir.mkdir(parents=True, exist_ok=True)
 
     print("\n[HTML] 생성 중...")
     topic_map = {t["id"]: t for t in topics}
@@ -128,15 +114,82 @@ def run():
                 recent_analyses.append(analysis)
 
         synthesis = {}
-        if len(recent_analyses) >= 2:
-            print(f"  [synthesize] {topic_id} - 최근 {synthesis_days}일치 {len(recent_analyses)}개 종합 중...")
-            synthesis = synthesize_topic(topic, recent_analyses)
+        synthesis_path = synthesis_dir / f"{topic_id}.json"
+
+        # Load cache first
+        if synthesis_path.exists():
+            try:
+                synthesis = json.loads(synthesis_path.read_text(encoding="utf-8"))
+            except Exception as e:
+                print(f"  [warn] {topic_id} 종합 캐시 로드 실패: {e}")
+
+        # If cache is missing/empty, and we have enough data and API key, synthesize and save cache
+        if not synthesis and len(recent_analyses) >= 2:
+            if os.environ.get("GEMINI_API_KEY"):
+                print(f"  [synthesize] {topic_id} - 최근 {synthesis_days}일치 {len(recent_analyses)}개 종합 중...")
+                synthesis = synthesize_topic(topic, recent_analyses)
+                if synthesis:
+                    synthesis_path.write_text(json.dumps(synthesis, ensure_ascii=False, indent=2), encoding="utf-8")
+            else:
+                print(f"  [info] {topic_id} - 최근 {synthesis_days}일치 {len(recent_analyses)}개 존재하나 API 키나 캐시가 없어 종합을 생략합니다.")
 
         render_topic_page(topic_map[topic_id], "\n".join(all_cards), output_dir,
                           channels=active_channels, synthesis=synthesis)
         topic_card_counts[topic_id] = len(all_cards)
 
     render_index(topics, topic_card_counts, output_dir)
+    print("\n[HTML 생성 완료]")
 
-    save_seen(seen)
-    print("\n[완료]")
+
+def run():
+    # 1. Collect videos to data/pending
+    collect_pending()
+
+    # 2. Process pending files using Gemini API
+    pending_dir = Path("data/pending")
+    topics = json.loads(Path("config/topics.json").read_text(encoding="utf-8"))["topics"]
+    valid_topic_ids = {t["id"] for t in topics}
+
+    pending_files = list(pending_dir.glob("*.json"))
+    if pending_files:
+        print(f"\n[API 분석] {len(pending_files)}개의 수집된 영상 분석 시작...")
+        for p_file in pending_files:
+            try:
+                data = json.loads(p_file.read_text(encoding="utf-8"))
+                video = data["video"]
+                transcript = data["transcript"]
+
+                print(f"\n  [영상] {video['title']}")
+                analysis = analyze_video(video, transcript)
+                if not analysis:
+                    print("  [retry] Gemini 오류 - 30초 후 재시도...")
+                    time.sleep(30)
+                    analysis = analyze_video(video, transcript)
+                if not analysis:
+                    print("  [skip] 분석 실패 - 대기 상태 유지")
+                    continue
+
+                classification = classify_video(analysis, topics)
+                primary = classification.get("primary_topic", "tech")
+
+                if primary not in valid_topic_ids:
+                    primary = "tech"
+
+                result_dir = Path(f"data/analyzed/{primary}")
+                result_dir.mkdir(parents=True, exist_ok=True)
+                result_path = result_dir / f"{video['id']}.json"
+                result_path.write_text(
+                    json.dumps({"video": video, "analysis": analysis, "classification": classification},
+                               ensure_ascii=False, indent=2),
+                    encoding="utf-8"
+                )
+
+                # Delete processed pending file
+                p_file.unlink()
+                print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
+                time.sleep(random.uniform(10, 20))
+            except Exception as e:
+                print(f"  [error] {p_file.name} 처리 중 오류 발생: {e}")
+
+    # 3. Render HTML
+    render_dashboard()
