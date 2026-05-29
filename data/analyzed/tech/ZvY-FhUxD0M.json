@@ -1,0 +1,43 @@
+{
+  "video": {
+    "id": "ZvY-FhUxD0M",
+    "title": "10 Years Won't Be Enough: The Next Stage of the AI Rally Pointed Out by Jensen Huang...",
+    "published": "2026-05-29T06:46:12+00:00",
+    "channel_name": "한경 글로벌마켓",
+    "url": "https://www.youtube.com/watch?v=ZvY-FhUxD0M",
+    "thumbnail": "https://img.youtube.com/vi/ZvY-FhUxD0M/hqdefault.jpg"
+  },
+  "analysis": {
+    "summary": "엔비디아(NVIDIA) CEO 젠슨 황이 언급한 AI 랠리의 지속성(\"향후 10년도 부족하다\")과 이에 따른 차세대 AI 생태계의 패러다임 변화를 전망함. 단순 LLM 소프트웨어 경쟁을 넘어 하드웨어 인프라(AI 데이터센터, 전력망) 공급 부족의 심화와, 물리적인 세계를 학습하는 로봇/피지컬 AI(Physical AI) 및 에이전트 서비스가 다음 10년의 핵심 드라이버가 될 것임. AI 반도체 칩 시장의 지배적 지위와 공급 병목(HBM, 파운드리) 구조 하에서 기업들의 실적과 밸류에이션 리레이팅이 장기간 지속될 가능성을 확인해 줌.",
+    "key_claims": [
+      "젠슨 황은 현재의 AI 혁명이 단기 버블이 아니며, 인프라 전환(가속 컴퓨팅 및 데이터센터 재구축)과 산업별 AI 융합에 최소 10년 이상의 거대한 시간이 필요함을 역설함.",
+      "가속 컴퓨팅으로의 전환에 따른 데이터센터 개편 비용과 전력 확보 인프라의 확충 속도가 향후 AI 패권의 결정적인 우위 요소가 됨."
+    ],
+    "data_points": [
+      "엔비디아 가속 컴퓨팅 데이터센터 재구축 및 인프라 전환 주기: 10년 이상 소요 전망."
+    ],
+    "signal": "bullish",
+    "signal_reason": "AI 인프라 및 물리 AI 하드웨어 시장의 장기 성장세가 엔비디아의 공식 로드맵과 젠슨 황의 구체적 코멘드로 재확인되어 반도체, AI 칩, 전력 설비 등 AI 하드웨어 가치사슬 전반의 상승 랠리가 지속될 것임.",
+    "key_companies": [
+      "엔비디아",
+      "SK하이닉스",
+      "삼성전자",
+      "TSMC"
+    ],
+    "insight": "AI 시장의 관심이 단순 챗봇 서비스에서 막대한 비용 효율성(에너지 절감)을 내는 가속 컴퓨팅 하드웨어와 전력 인프라, 그리고 에이전트 코딩/실행 인프라로 고도화되고 있어 기술 집약도가 높은 공급망 독점 기업들이 이익을 지속 점유할 것임.",
+    "action_point": "AI 데이터센터의 전력 부족을 해결할 송배전/원전 인프라 수혜주와 차세대 HBM/고성능 반도체 소부장 독점 리더들을 대상으로 지속적인 포트폴리오 유지가 유리함."
+  },
+  "classification": {
+    "primary_topic": "tech",
+    "secondary_topics": [
+      "stock"
+    ],
+    "tags": [
+      "젠슨황엔비디아",
+      "AI랠리10년",
+      "가속컴퓨팅",
+      "전력인프라",
+      "반도체공급망"
+    ]
+  }
+}

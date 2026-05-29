@@ -1,0 +1,43 @@
+{
+  "video": {
+    "id": "OfRMk559FKQ",
+    "title": "Why a Korean name was included in NASA's lunar base plan?!",
+    "published": "2026-05-29T06:44:18+00:00",
+    "channel_name": "안될과학 Unrealscience",
+    "url": "https://www.youtube.com/watch?v=OfRMk559FKQ",
+    "thumbnail": "https://img.youtube.com/vi/OfRMk559FKQ/hqdefault.jpg"
+  },
+  "analysis": {
+    "summary": "NASA의 아르테미스(Artemis) 달 기지 건설 프로젝트의 일환인 민간 달 탑재체 서비스(CLPS) 미션에서 한국천문연구원(KASI)이 독자 개발한 조사 장비가 달 표면 탐사에 정식 채택된 의의를 다룸. 인튜어티브 머신즈(Intuitive Machines)의 '노바-C 트리니티' 착륙선에 실릴 '루나 버텍스(Lunar Vertex)' 임무에 한국 천문연의 탑재체가 포함되어, 달 표면의 미스터리한 밝은 무늬인 '루나 스월(Luna Swirl)'과 자기장 현상을 함께 연구하게 됨. 단순 착륙선 도달을 넘어 달 표면을 주행하고 화물을 운반하며 사람이 없을 때도 지속 가동하는 로봇(달 탐사 차량/로버)의 구동력과 제어 기술이 향후 우주 영토 확장의 실질적인 승부처임을 강조함.",
+    "key_claims": [
+      "NASA가 아르테미스 달 기지 예비 임무의 공식 보도자료에 한국천문연구원을 명시함으로써, 한국이 달 탐사 및 인프라 구축의 실질적 참여 파트너로 국제적 인정을 받음.",
+      "달 탐사의 패러다임이 고정형 착륙에서 기동성을 지닌 달 표면 로봇/모빌리티(로버)와 사람이 개입하지 않는 자율 로봇 작업 체계로 진화하고 있음."
+    ],
+    "data_points": [
+      "NASA의 CLPS 미션 착륙선 모델: 인튜어티브 머신즈의 노바-C 트리니티 (Nova-C Trinity).",
+      "조사 대상: 달 표면의 특이 밝기 패턴인 루나 스월 (Luna Swirl)."
+    ],
+    "signal": "bullish",
+    "signal_reason": "한국의 우주 항공 연구 기관이 글로벌 메이저 우주 프로젝트인 NASA 아르테미스 미션의 핵심 탐사 파트너로 공식 등록되어 국내 우주 항공 산업(K-우주 방산 및 로보틱스)의 글로벌 기술 신뢰도와 위상이 크게 상승함.",
+    "key_companies": [
+      "Intuitive Machines",
+      "한국항공우주연구원",
+      "한화에어로스페이스"
+    ],
+    "insight": "우주 탐사가 국가 주도에서 민간 주도(CLPS)로 이전되고 모빌리티 로봇이 주역으로 떠오르면서, 지상의 가혹한 물리 환경을 극복하는 로봇 메카닉 기술과 우주 방사선 및 극저온을 견디는 특수 전자기 부품 밸류체인이 새로운 우주 경제 영토를 형성하고 있음.",
+    "action_point": "NASA 아르테미스 프로젝트의 국내 협력 기관들과 민간 우주선/위성/로버 부품 공급망을 형성하는 국내 우주항공 및 고신뢰성 모빌리티 부품 기업들에 대한 장기적 관점의 비중 확대를 제안함."
+  },
+  "classification": {
+    "primary_topic": "tech",
+    "secondary_topics": [
+      "robot"
+    ],
+    "tags": [
+      "아르테미스프로젝트",
+      "한국천문연구원",
+      "루나버텍스",
+      "인튜어티브머신즈",
+      "달탐사로버"
+    ]
+  }
+}

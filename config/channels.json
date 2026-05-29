@@ -20,6 +20,63 @@
       "handle": "@eng_tv",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCnvCYORRLMYMQNhrlBILdCg",
       "active": true
+    },
+    {
+      "id": "UCeN2YeJcBCRJoXgzF_OU3qw",
+      "name": "안될공학 - IT 테크 신기술",
+      "handle": "@unrealtech",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCeN2YeJcBCRJoXgzF_OU3qw",
+      "active": true
+    },
+    {
+      "id": "UCMc4EmuDxnHPc6pgGW-QWvQ",
+      "name": "안될과학 Unrealscience",
+      "handle": "@Unrealscience",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCMc4EmuDxnHPc6pgGW-QWvQ",
+      "active": true
+    },
+    {
+      "id": "UCfnqgWlC5IvJEAPTmyjaixA",
+      "name": "수페TV",
+      "handle": "@supe-tv",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCfnqgWlC5IvJEAPTmyjaixA",
+      "active": true
+    },
+    {
+      "id": "UCWskYkV4c4S9D__rsfOl2JA",
+      "name": "한경 글로벌마켓",
+      "handle": "@hkglobalmarket",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCWskYkV4c4S9D__rsfOl2JA",
+      "active": true
+    },
+    {
+      "id": "UCSPMRoAphbObUYeDaX367Fg",
+      "name": "Softdragon SOD",
+      "handle": "@softdragon",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSPMRoAphbObUYeDaX367Fg",
+      "active": true
+    },
+    {
+      "id": "UCxvdCnvGODDyuvnELnLkQWw",
+      "name": "이효석아카데미",
+      "handle": "@hs_academy",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCxvdCnvGODDyuvnELnLkQWw",
+      "active": true
+    },
+    {
+      "id": "UCZS9wEZ4itPbBZk_sqccXfw",
+      "name": "Smart Money by MiraeAsset ",
+      "handle": "@SmartMoney0",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCZS9wEZ4itPbBZk_sqccXfw",
+      "active": true
+    },
+    {
+      "id": "UC7H3LGAlRWd3_fm5yOS_piw",
+      "name": "디파이 농부 조선생 | Professor Jo",
+      "handle": "@Web3World",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC7H3LGAlRWd3_fm5yOS_piw",
+      "active": true
     }
   ]
 }
+
