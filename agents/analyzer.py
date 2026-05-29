@@ -43,10 +43,14 @@ def analyze_video(video: dict, transcript: str) -> dict:
         channel=video["channel_name"],
         transcript=transcript[:8000]
     )
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+    except Exception as e:
+        print(f"  [warn] Gemini 분석 오류: {e}")
+        return {}
 
     text = response.text
     match = re.search(r'\{.*\}', text, re.DOTALL)

@@ -37,7 +37,7 @@ def fetch_new_videos(channel: dict) -> list:
         print(f"  [초기화] 기존 영상 {len(feed_ids)}개 스킵, 이후 새 영상부터 분석")
         return []
 
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=26)
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
 
     new_videos = []
     for entry in feed.entries:
@@ -76,6 +76,13 @@ def fetch_transcript(video_id: str) -> str:
             "quiet": True,
             "no_warnings": True,
             "outtmpl": os.path.join(tmpdir, "%(id)s.%(ext)s"),
+            "sleep_interval": 2,
+            "max_sleep_interval": 6,
+            "extractor_retries": 3,
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+            },
         }
         if COOKIES_PATH.exists():
             ydl_opts["cookiefile"] = str(COOKIES_PATH)

@@ -42,10 +42,14 @@ def synthesize_topic(topic: dict, analyses: list) -> dict:
         topic_label=topic["label"],
         analyses=json.dumps(analyses, ensure_ascii=False, indent=2)
     )
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+    except Exception as e:
+        print(f"  [warn] Gemini 종합 오류: {e}")
+        return {}
 
     text = response.text
     match = re.search(r'\{.*\}', text, re.DOTALL)

@@ -35,6 +35,7 @@ def run():
 
         for video in new_videos:
             print(f"\n  [영상] {video['title']}")
+            time.sleep(random.uniform(8, 15))
 
             transcript = fetch_transcript(video["id"])
             if not transcript:
@@ -44,13 +45,17 @@ def run():
                     print(f"  [skip] 자막 없음 (업로드 {age_hours:.0f}h 경과 → 포기)")
                     seen.add(video["id"])
                 else:
-                    print(f"  [retry] 자막 없음 (업로드 {age_hours:.1f}h — 다음 실행에서 재시도)")
-                time.sleep(random.uniform(3, 6))
+                    print(f"  [retry] 자막 없음 (업로드 {age_hours:.1f}h - 다음 실행에서 재시도)")
+                time.sleep(random.uniform(8, 15))
                 continue
 
             analysis = analyze_video(video, transcript)
             if not analysis:
-                print("  [skip] 분석 실패")
+                print("  [retry] Gemini 오류 - 30초 후 재시도...")
+                time.sleep(30)
+                analysis = analyze_video(video, transcript)
+            if not analysis:
+                print("  [skip] 분석 실패 - 다음 실행에서 재시도")
                 continue
 
             classification = classify_video(analysis, topics)
@@ -71,10 +76,10 @@ def run():
             seen.add(video["id"])
             new_count += 1
             print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
-            time.sleep(random.uniform(5, 10))
+            time.sleep(random.uniform(10, 20))
 
     if new_count == 0:
-        print("\n[완료] 새 영상 없음 — HTML 유지")
+        print("\n[완료] 새 영상 없음 - HTML 유지")
         save_seen(seen)
         return
 
@@ -124,7 +129,7 @@ def run():
 
         synthesis = {}
         if len(recent_analyses) >= 2:
-            print(f"  [synthesize] {topic_id} — 최근 {synthesis_days}일치 {len(recent_analyses)}개 종합 중...")
+            print(f"  [synthesize] {topic_id} - 최근 {synthesis_days}일치 {len(recent_analyses)}개 종합 중...")
             synthesis = synthesize_topic(topic, recent_analyses)
 
         render_topic_page(topic_map[topic_id], "\n".join(all_cards), output_dir,

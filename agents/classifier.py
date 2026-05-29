@@ -34,10 +34,14 @@ def classify_video(analysis: dict, topics: list, model=None) -> dict:
         analysis=json.dumps(analysis, ensure_ascii=False),
         topics=json.dumps(topics, ensure_ascii=False)
     )
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+    except Exception as e:
+        print(f"  [warn] Gemini 분류 오류: {e}")
+        return {"primary_topic": "tech", "secondary_topics": [], "tags": []}
 
     text = response.text
     match = re.search(r'\{.*\}', text, re.DOTALL)
