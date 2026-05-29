@@ -1,0 +1,47 @@
+{
+  "video": {
+    "id": "1iZlf4O43lg",
+    "title": "Why is Hyundai Boston Dynamics' humanoid technology ranked #1?",
+    "published": "2026-05-29T14:03:48+00:00",
+    "channel_name": "엔지니어TV",
+    "url": "https://www.youtube.com/watch?v=1iZlf4O43lg",
+    "thumbnail": "https://img.youtube.com/vi/1iZlf4O43lg/hqdefault.jpg"
+  },
+  "analysis": {
+    "summary": "글로벌 휴머노이드 랭킹에서 현대 보스턴 다이내믹스가 1위를 유지하는 기술적 배경과 차별점을 다룸. 보스턴 AI 연구소(RAI)의 연구 역량과 구글 딥마인드의 제미나이(Gemini) 모델 협력을 통해 인지, 계획, 시계열 추론(Long Horizon Temporal Reasoning) 능력을 극대화함. 로봇의 에이전트화(스스로 코드 실행 및 교정)와 현실 세계 오동작 방지를 위한 엄격한 안전성(Safety) 기준 확보가 경쟁사 대비 절대적 우위 요소임.",
+    "key_claims": [
+      "보스턴 다이내믹스의 움직임(로커모션/매니플레이션) 제어 기술은 사람 이상의 움직임(예: 시속 112km 공 캐치/저글링)이 가능할 정도로 완숙함.",
+      "현대차가 지분의 대부분을 보유한 독립 연구 기관인 보스턴 AI 연구소(RAI)가 보스턴 다이내믹스의 행동 AI와 파운데이션 모델 개발을 주도함.",
+      "인지 및 장기 추론(Long-Horizon Reasoning)과 이미지 판독을 위한 스스로의 코드 생성 등 로봇 에이전트 기술에서 구글 딥마인드와 협력하여 기술 시너지를 냄."
+    ],
+    "data_points": [
+      "현대차가 대부분의 지분을 보유하고 보스턴 다이내믹스가 5% 지분을 가진 보스턴 AI 연구소(RAI) 주도.",
+      "야구 공 캐치/타격 반응 속도: 시속 112km(70마일) 공 투구 가능, 7m 거리에서 60km 공 잡고 48km 공 타격 가능."
+    ],
+    "signal": "bullish",
+    "signal_reason": "현대차그룹이 지배하는 보스턴 AI 연구소(RAI)의 원천 행동 제어 기술과 구글 딥마인드의 거대 언어/멀티모달 모델(Gemini) 협력 체계가 갖춰져 독보적인 1위 경쟁력을 유지하고 있음.",
+    "key_companies": [
+      "현대자동차",
+      "보스턴 다이내믹스",
+      "구글",
+      "구글 딥마인드"
+    ],
+    "insight": "중국 로봇 경쟁사들이 안전 기준 없이 시연하는 것과 달리, 현실 세계의 오동작(환각으로 인한 인명 피해)을 막는 엄격한 세이프티 기준을 적용하면서도 고도의 물리적 저글링/스포츠 동작이 가능하다는 점에서 보스턴 다이내믹스의 실질적 격차가 매우 큼.",
+    "action_point": "로봇의 인지·장기 추론 분야에서 구글의 Gemini 모델 협력과 현대차의 RAI 투자가 본격적인 결실을 맺고 있으므로, 향후 공개될 실제 월드컵 스타디움 시연이나 대규모 산업 현장 협업 모델에 주목할 필요가 있음."
+  },
+  "classification": {
+    "primary_topic": "robot",
+    "secondary_topics": [
+      "tech",
+      "stock"
+    ],
+    "tags": [
+      "보스턴AI연구소",
+      "RAI",
+      "구글딥마인드",
+      "Gemini",
+      "로봇안전성",
+      "저글링"
+    ]
+  }
+}

@@ -78,13 +78,11 @@ def _fetch_via_ytdlp(channel_id: str, limit: int = 15) -> list:
     return entries
 
 
-def fetch_new_videos(channel: dict) -> list:
+def fetch_new_videos(channel: dict, seen: set) -> list:
     """RSS로 새 영상만 가져오기 (실패 시 yt-dlp 우회).
-    채널을 처음 추가했을 때 기존 영상은 모두 seen 처리하고 건너뜀.
+    채널을 처음 추가했을 때 최근 24시간 이내 영상은 수집하고, 그보다 오래된 기존 영상만 seen 처리하여 스킵.
     이후 새로 올라오는 영상만 분석 대상으로 반환.
     """
-    seen = load_seen()
-    
     feed_entries = []
     try:
         feed = feedparser.parse(channel["rss"])
@@ -103,13 +101,21 @@ def fetch_new_videos(channel: dict) -> list:
     feed_ids = [entry.yt_videoid for entry in feed_entries]
     channel_ids_in_seen = any(vid in seen for vid in feed_ids)
 
-    # 이 채널이 처음 추가된 경우 → 기존 영상 전부 seen 처리 후 빈 목록 반환
+    # 이 채널이 처음 추가된 경우 → 기존 영상 중 24시간이 넘은 건 전부 seen 처리하고 스킵
     if not channel_ids_in_seen:
-        for vid in feed_ids:
-            seen.add(vid)
-        save_seen(seen)
-        print(f"  [초기화] 기존 영상 {len(feed_ids)}개 스킵, 이후 새 영상부터 분석")
-        return []
+        cutoff_24h = datetime.now(timezone.utc) - timedelta(hours=24)
+        skipped_count = 0
+        for entry in feed_entries:
+            vid = entry.yt_videoid
+            try:
+                pub_dt = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
+            except Exception:
+                pub_dt = datetime.now(timezone.utc)
+                
+            if pub_dt < cutoff_24h:
+                seen.add(vid)
+                skipped_count += 1
+        print(f"  [초기화] 기존 영상 {skipped_count}개 스킵 (최근 24시간 이내 영상은 수집 대상 유지)")
 
     cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
 
@@ -118,7 +124,11 @@ def fetch_new_videos(channel: dict) -> list:
         video_id = entry.yt_videoid
         if video_id in seen:
             continue
-        published = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
+        try:
+            published = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
+        except Exception:
+            published = datetime.now(timezone.utc)
+            
         if published < cutoff:
             seen.add(video_id)
             continue
@@ -131,7 +141,6 @@ def fetch_new_videos(channel: dict) -> list:
             "thumbnail": f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
         })
 
-    save_seen(seen)
     return new_videos
 
 

@@ -24,7 +24,7 @@ def collect_pending():
             continue
 
         print(f"\n[채널] {channel['name']} 확인 중...")
-        new_videos = fetch_new_videos(channel)
+        new_videos = fetch_new_videos(channel, seen)
 
         if not new_videos:
             print("  새 영상 없음")
