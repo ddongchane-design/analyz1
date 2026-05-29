@@ -417,9 +417,16 @@ def render_topic_page(topic: dict, cards_html: str, output_dir: Path, channels: 
     print(f"  [html] {out}")
 
 
-def render_index(topics: list, topic_card_counts: dict, output_dir: Path):
+def render_index(topics: list, topic_card_counts: dict, topic_last_updates: dict, output_dir: Path):
+    # 가장 최근에 업데이트된 영상 날짜가 있는 순서로 정렬
+    sorted_topics = sorted(
+        topics,
+        key=lambda x: topic_last_updates.get(x["id"], "1970-01-01T00:00:00+00:00"),
+        reverse=True
+    )
+
     cards_html = ""
-    for t in topics:
+    for t in sorted_topics:
         tid   = t["id"]
         pal   = TOPIC_PALETTE.get(tid, TOPIC_PALETTE["tech"])
         color = pal["color"]

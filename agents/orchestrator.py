@@ -76,6 +76,7 @@ def render_dashboard():
     print("\n[HTML] 생성 중...")
     topic_map = {t["id"]: t for t in topics}
     topic_card_counts = {}
+    topic_last_updates = {}
 
     active_sorted_channels = sorted(
         [ch for ch in channels if ch.get("active", True)],
@@ -90,6 +91,7 @@ def render_dashboard():
 
         all_cards = []
         analyses = []
+        last_update = "1970-01-01T00:00:00+00:00"
 
         if analyzed_dir.exists():
             entries = []
@@ -101,10 +103,14 @@ def render_dashboard():
                     print(f"  [warn] {json_file.name} 로드 실패: {e}")
 
             entries.sort(key=lambda x: x["video"].get("published", ""), reverse=True)
+            if entries:
+                last_update = entries[0]["video"].get("published", last_update)
 
             for data in entries:
                 all_cards.append(render_card(data["video"], data["analysis"], data["classification"]))
                 analyses.append((data["video"].get("published", ""), data["analysis"]))
+
+        topic_last_updates[topic_id] = last_update
 
         # 종합 인사이트: synthesis_days 이내 영상만 참고
         synthesis_days = topic.get("synthesis_days", 7)
@@ -142,7 +148,7 @@ def render_dashboard():
                           channels=active_channels, synthesis=synthesis)
         topic_card_counts[topic_id] = len(all_cards)
 
-    render_index(topics, topic_card_counts, output_dir)
+    render_index(topics, topic_card_counts, topic_last_updates, output_dir)
     print("\n[HTML 생성 완료]")
 
 
