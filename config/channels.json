@@ -13,6 +13,13 @@
       "handle": "@MK_Invest",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCIipmgxpUxDmPP-ma3Ahvbw",
       "active": true
+    },
+    {
+      "id": "UCnvCYORRLMYMQNhrlBILdCg",
+      "name": "엔지니어TV",
+      "handle": "@eng_tv",
+      "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCnvCYORRLMYMQNhrlBILdCg",
+      "active": true
     }
   ]
 }

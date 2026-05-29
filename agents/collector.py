@@ -18,15 +18,89 @@ def save_seen(seen: set):
     SEEN_PATH.write_text(json.dumps(list(seen), ensure_ascii=False), encoding="utf-8")
 
 
+def _fetch_via_ytdlp(channel_id: str, limit: int = 15) -> list:
+    """yt-dlp를 이용해 채널의 업로드 비디오 목록 가져오기 (RSS 404 우회용)"""
+    from types import SimpleNamespace
+    
+    # UC -> UU 변환하여 업로드 플레이리스트 ID 생성
+    playlist_id = f"UU{channel_id[2:]}" if channel_id.startswith("UC") else channel_id
+    url = f"https://www.youtube.com/playlist?list={playlist_id}"
+    
+    ydl_opts = {
+        "extract_flat": "in_playlist",
+        "skip_download": True,
+        "quiet": True,
+        "no_warnings": True,
+        "playlistend": limit,
+    }
+    
+    if COOKIES_PATH.exists():
+        ydl_opts["cookiefile"] = str(COOKIES_PATH)
+        
+    entries = []
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False)
+            if "entries" in info:
+                for item in info["entries"]:
+                    if not item:
+                        continue
+                    video_id = item.get("id")
+                    title = item.get("title")
+                    upload_date = item.get("upload_date")  # YYYYMMDD string
+                    
+                    if not video_id or not title:
+                        continue
+                        
+                    if upload_date:
+                        try:
+                            dt = datetime.strptime(upload_date, "%Y%m%d")
+                            published_parsed = dt.timetuple()
+                            published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                        except Exception:
+                            dt = datetime.now()
+                            published_parsed = dt.timetuple()
+                            published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                    else:
+                        dt = datetime.now()
+                        published_parsed = dt.timetuple()
+                        published = dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                        
+                    entries.append(SimpleNamespace(
+                        yt_videoid=video_id,
+                        title=title,
+                        published_parsed=published_parsed,
+                        published=published
+                    ))
+    except Exception as e:
+        print(f"  [warn] yt-dlp 우회 실패: {e}")
+        
+    return entries
+
+
 def fetch_new_videos(channel: dict) -> list:
-    """RSS로 새 영상만 가져오기.
+    """RSS로 새 영상만 가져오기 (실패 시 yt-dlp 우회).
     채널을 처음 추가했을 때 기존 영상은 모두 seen 처리하고 건너뜀.
     이후 새로 올라오는 영상만 분석 대상으로 반환.
     """
     seen = load_seen()
-    feed = feedparser.parse(channel["rss"])
+    
+    feed_entries = []
+    try:
+        feed = feedparser.parse(channel["rss"])
+        feed_entries = feed.entries
+    except Exception:
+        pass
+        
+    if not feed_entries:
+        print("  [RSS 실패] yt-dlp 우회로 영상 목록 조회를 시도합니다...")
+        feed_entries = _fetch_via_ytdlp(channel["id"])
+        
+    if not feed_entries:
+        print("  영상 목록을 가져오지 못했습니다.")
+        return []
 
-    feed_ids = [entry.yt_videoid for entry in feed.entries]
+    feed_ids = [entry.yt_videoid for entry in feed_entries]
     channel_ids_in_seen = any(vid in seen for vid in feed_ids)
 
     # 이 채널이 처음 추가된 경우 → 기존 영상 전부 seen 처리 후 빈 목록 반환
@@ -40,7 +114,7 @@ def fetch_new_videos(channel: dict) -> list:
     cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
 
     new_videos = []
-    for entry in feed.entries:
+    for entry in feed_entries:
         video_id = entry.yt_videoid
         if video_id in seen:
             continue
