@@ -1,0 +1,44 @@
+{
+  "video": {
+    "id": "IzwbK74vte4",
+    "title": "한국 최초로 AMD가 선택한 기업 ㄷㄷ",
+    "published": "2026-05-30T11:00:26+00:00",
+    "channel_name": "Softdragon SOD",
+    "url": "https://www.youtube.com/watch?v=IzwbK74vte4",
+    "thumbnail": "https://img.youtube.com/vi/IzwbK74vte4/hqdefault.jpg"
+  },
+  "analysis": {
+    "summary": "한국의 70인 스타트업이 AMD와 협력하여 AMD GPU가 엔비디아 GPU처럼 작동하게 하는 소프트웨어를 개발했습니다.\n이 기술은 AI 비용을 절반 이하로 줄일 수 있으며, 한국에서 네이버 카카오를 넘어서는 거대 IT 기업을 탄생시킬 잠재력을 가집니다.\nAMD의 선택을 받았다는 점에서 기술적 혁신과 시장 잠재력이 매우 크다고 평가됩니다.",
+    "key_claims": [
+      "한국의 작은 스타트업(70명)이 AMD의 선택을 받았다.",
+      "스타트업의 소프트웨어는 AMD GPU를 엔비디아 GPU처럼 작동시킨다.",
+      "이 기술은 AI 비용을 절반 이하로 절감시킬 수 있다.",
+      "성공 시 네이버, 카카오보다 거대한 IT 기업이 탄생할 수 있다."
+    ],
+    "data_points": [
+      "직원 70명",
+      "AI 비용 절반 이하"
+    ],
+    "signal": "bullish",
+    "signal_reason": "AI 컴퓨팅 비용을 대폭 절감하고 AMD GPU의 성능을 엔비디아 수준으로 끌어올릴 수 있는 파괴적 기술이며, 이는 AI 산업 전반에 막대한 영향과 함께 해당 스타트업의 폭발적인 성장 잠재력을 시사한다.",
+    "key_companies": [
+      "AMD",
+      "NVIDIA",
+      "네이버",
+      "카카오"
+    ],
+    "insight": "이 영상은 AI 산업의 핵심 병목인 고비용 GPU 문제를 해결할 잠재적 게임 체인저 기술을 소개합니다. 엔비디아가 독점하고 있는 고성능 AI GPU 시장에 AMD 기반의 저비용 고효율 솔루션이 등장할 수 있음을 의미하며, 이는 AI 서비스 및 개발의 대중화를 가속화할 중대한 변화의 신호탄이 될 수 있습니다.",
+    "action_point": "이 기술을 개발한 '한국 최초 AMD 선택 기업' 스타트업의 정체와 기술 구체화 수준, AMD와의 파트너십 상세 내용, 그리고 시장 출시 계획에 대한 추가 조사가 필요합니다. 해당 기술의 상용화 시 AI 칩 시장, 클라우드 서비스 제공자, 그리고 AI 솔루션 기업들의 투자 전략에 미칠 영향을 면밀히 분석하고 대비해야 합니다."
+  },
+  "classification": {
+    "primary_topic": "tech",
+    "secondary_topics": [
+      "stock"
+    ],
+    "tags": [
+      "GPU",
+      "스타트업",
+      "AMD"
+    ]
+  }
+}
