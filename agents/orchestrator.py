@@ -153,64 +153,6 @@ def render_dashboard():
 
 
 def run():
-    # 1. Collect videos to data/pending
+    # 1. Collect videos to data/pending (API 비용 발생을 방지하기 위해 자막 수집만 수행)
     collect_pending()
 
-    # 2. Process pending files using Gemini API
-    pending_dir = Path("data/pending")
-    topics = json.loads(Path("config/topics.json").read_text(encoding="utf-8"))["topics"]
-    valid_topic_ids = {t["id"] for t in topics}
-
-    pending_files = list(pending_dir.glob("*.json"))
-    if pending_files:
-        print(f"\n[API 분석] {len(pending_files)}개의 수집된 영상 분석 시작...")
-        for p_file in pending_files:
-            try:
-                data = json.loads(p_file.read_text(encoding="utf-8"))
-                video = data["video"]
-                transcript = data["transcript"]
-
-                print(f"\n  [영상] {video['title']}")
-                analysis = analyze_video(video, transcript)
-                if not analysis:
-                    print("  [retry] Gemini 오류 - 30초 후 재시도...")
-                    time.sleep(30)
-                    analysis = analyze_video(video, transcript)
-                if not analysis:
-                    print("  [skip] 분석 실패 - 대기 상태 유지")
-                    continue
-
-                classification = classify_video(analysis, topics)
-                primary = classification.get("primary_topic", "etc")
-
-                if primary not in valid_topic_ids:
-                    primary = "etc"
-
-                result_dir = Path(f"data/analyzed/{primary}")
-                result_dir.mkdir(parents=True, exist_ok=True)
-                result_path = result_dir / f"{video['id']}.json"
-                result_path.write_text(
-                    json.dumps({"video": video, "analysis": analysis, "classification": classification},
-                               ensure_ascii=False, indent=2),
-                    encoding="utf-8"
-                )
-
-                # Delete processed pending file
-                p_file.unlink()
-
-                # Delete synthesis cache for this topic to force regeneration next time
-                synthesis_cache = Path("data/synthesis") / f"{primary}.json"
-                if synthesis_cache.exists():
-                    try:
-                        synthesis_cache.unlink()
-                        print(f"  [cache invalidation] Deleted synthesis cache for '{primary}' due to new analyzed video.")
-                    except Exception as e:
-                        print(f"  [warn] Failed to delete synthesis cache: {e}")
-
-                print(f"  [done] {primary} | signal: {analysis.get('signal', '?')}")
-                time.sleep(random.uniform(10, 20))
-            except Exception as e:
-                print(f"  [error] {p_file.name} 처리 중 오류 발생: {e}")
-
-    # 3. Render HTML
-    render_dashboard()
