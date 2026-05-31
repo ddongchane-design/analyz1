@@ -1,6 +1,8 @@
 @echo off
 chcp 65001 > nul
 cd /d "%~dp0"
+set PATH=C:\Program Files\Git\cmd;%PATH%
+
 
 echo ============================
 echo  YouTube Insight 실행 중...
